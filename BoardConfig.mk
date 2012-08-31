@@ -11,6 +11,7 @@ TARGET_BOOTLOADER_BOARD_NAME := presto
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom loglevel=0
 BOARD_KERNEL_BASE := 0x40200000
 BOARD_KERNEL_PAGESIZE := 2048
+BOARD_FORCE_RAMDISK_ADDRESS := 0x41400000
 
 # fix this up by examining /proc/mtd on a running device
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x105c0000
