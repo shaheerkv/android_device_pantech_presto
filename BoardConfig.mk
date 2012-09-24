@@ -14,6 +14,7 @@ TARGET_HAVE_HDMI_OUT := false
 
 # Platform
 TARGET_BOARD_PLATFORM := msm8660
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 
 # Architecture
 TARGET_CPU_ABI := armeabi-v7a
