@@ -1,0 +1,11 @@
+[
+	{
+		"repository": "android_kernel_pantech_p9070",
+		"target_path": "kernel/pantech/p9070"
+	},
+	{
+		"repository": "android_device_pantech_qcom-common",
+		"target_path": "device/pantech/qcom-common"
+	}
+]
+
