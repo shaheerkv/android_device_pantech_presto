@@ -11,8 +11,8 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 $(call inherit-product, device/pantech/presto/full_presto.mk)
 
 ## Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := presto
 PRODUCT_NAME := cm_presto
-PRODUCT_BRAND := pantech
-PRODUCT_MODEL := presto
-PRODUCT_MANUFACTURER := pantech
+PRODUCT_DEVICE := presto
+PRODUCT_BRAND := ATT
+PRODUCT_MANUFACTURER := Pantech
+PRODUCT_MODEL := PantechP9070

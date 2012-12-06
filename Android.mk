@@ -14,5 +14,8 @@
 # limitations under the License.
 #
 
-PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/full_presto.mk
+LOCAL_PATH := $(call my-dir)
+
+ifeq ($(TARGET_DEVICE),presto)
+    include $(call first-makefiles-under,$(LOCAL_PATH))
+endif
