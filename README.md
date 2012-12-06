@@ -8,10 +8,6 @@ Common configurations for Qualcomm chipsets, based on source from Code Aurora Fo
 <li>https://www.codeaurora.org/gitweb/quic/la/?p=platform/vendor/qcom/msm8660_surf.git</li>
 </ul>
 <h3>Dependencies</h3>
-<pre>
-  &lt;project name="attn1/android_kernel_pantech_p9070" path="kernel/pantech/p9070" remote="github" revision="master" /&gt;
-  &lt;project name="mifl/android_vendor_pantech_presto" path="vendor/pantech/presto" remote="github" revision="jellybean" /&gt;
-</pre>
 To compile the rom correctly you should add to your "local_manifest.xml" the kernel repository:
 <pre>
   &lt;project name="mifl/android_vendor_pantech_presto" path="vendor/pantech/presto" remote="github" revision="jellybean" /&gt;
