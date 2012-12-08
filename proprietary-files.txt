@@ -7,6 +7,49 @@ lib/liboverlay.so
 lib/libQcomUI.so
 lib/hw/gralloc.msm8660.so
 
+# Prebuilt libraries from CodeAurora
+lib/libDivxDrm.so
+lib/libmm-color-convertor.so
+lib/libmmosal.so
+lib/libmmparser_divxdrmlib.so
+lib/libmmparser.so
+lib/libqc-opt.so
+lib/libv8.so
+
+# Prebuilt libraries for CAF Chromium plug-ins
+lib/libcneapiclient.so
+lib/libcneqmiutils.so
+lib/libdiag.so
+lib/libdnshostprio.so
+lib/libnetmonitor.so
+lib/libtcpfinaggr.so
+lib/pp_proc_plugin.so
+lib/qnet-plugin.so
+lib/tcp-connections.so
+
+# All the blobs necessary for adreno
+etc/firmware/a225_pfp.fw
+etc/firmware/a225_pm4.fw
+etc/firmware/a225p5_pm4.fw
+etc/firmware/a300_pfp.fw
+etc/firmware/a300_pm4.fw
+etc/firmware/leia_pfp_470.fw
+etc/firmware/leia_pm4_470.fw
+etc/firmware/yamato_pfp.fw
+etc/firmware/yamato_pm4.fw
+lib/egl/eglsubAndroid.so
+lib/egl/libEGL_adreno200.so
+lib/egl/libGLES_android.so
+lib/egl/libGLESv1_CM_adreno200.so
+lib/egl/libGLESv2_adreno200.so
+lib/egl/libGLESv2S3D_adreno200.so
+lib/egl/libq3dtools_adreno200.so
+lib/libc2d2_z180.so
+lib/libC2D2.so
+lib/libgsl.so
+lib/libOpenVG.so
+lib/libsc-a2xx.so
+
 # Firmware
 etc/firmware/cyttsp_8660_ffa.hex
 etc/firmware/cyttsp_8660_fluid_p2.hex
@@ -48,6 +91,22 @@ bin/ds_fmc_appd
 bin/mpdecision
 bin/port-bridge
 
+# Audio
+lib/libacdbloader.so
+lib/libacdbmapper.so
+lib/libaudcal.so
+lib/libaudioalsa.so
+lib/libaudioparsers.so
+
+# Camera
+lib/hw/camera.msm8660.so
+lib/libgemini.so
+lib/libmmipl.so
+lib/libmmjpeg.so
+lib/libmmmpo.so
+lib/libmmstereo.so
+lib/liboemcamera.so
+
 #gps
 lib/libcommondefs.so
 lib/libgps.utils.so
@@ -55,13 +114,6 @@ lib/libloc_adapter.so
 lib/libloc_api-rpc-qc.so
 lib/libloc_eng.so
 lib/liboncrpc.so
-
-# Audio
-lib/libacdbloader.so
-lib/libacdbmapper.so
-lib/libaudcal.so
-lib/libaudioalsa.so
-lib/libaudioparsers.so
 
 #wifi
 etc/wifi/wpa_supplicant.conf
