@@ -2,6 +2,6 @@
     {
         "repository": "android_kernel_pantech_p9070",
         "target_path": "kernel/pantech/p9070",
-        "branch": "master"
+        "branch": "jellybean"
     }
 ]

@@ -1,4 +1,4 @@
-# Copyright (c) 2012, Code Aurora Forum. All rights reserved.
+# Copyright (c) 2010, Code Aurora Forum. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -25,4 +25,8 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-dev_mount sdcard /storage/sdcard0 auto /devices/platform/msm_sdcc.3/mmc_host /devices/platform/msm_sdcc.1/mmc_host
+#<-- p11171 dongseok modified
+#dev_mount sdcard /mnt/sdcard auto /devices/platform/msm_sdcc.3/mmc_host /devices/platform/msm_sdcc.1/mmc_host
+dev_mount sdcard /mnt/sdcard auto /devices/platform/msm_sdcc.1/mmc_host
+dev_mount sdcard /mnt/sdcard/external_sd auto /devices/platform/msm_sdcc.3/mmc_host
+#-->

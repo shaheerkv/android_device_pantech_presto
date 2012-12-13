@@ -1,17 +1,17 @@
-ifeq ($(TARGET_RECOVERY_UI_LIB),librecovery_ui_pantech)
+ifeq ($(TARGET_RECOVERY_UI_LIB),librecovery_ui_qcom)
 ifneq ($(TARGET_SIMULATOR),true)
 ifeq ($(TARGET_ARCH),arm)
 
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := librecovery_ui_pantech
+LOCAL_MODULE := librecovery_ui_qcom
 
 LOCAL_MODULE_TAGS := optional
 
 LOCAL_C_INCLUDES += bootable/recovery
 
-LOCAL_SRC_FILES += pantech_recovery_ui.c
+LOCAL_SRC_FILES += qcom_recovery_ui.c
 
 LOCAL_STATIC_LIBRARIES += libext4_utils libz
 LOCAL_STATIC_LIBRARIES += libminzip libunz libmtdutils libmincrypt

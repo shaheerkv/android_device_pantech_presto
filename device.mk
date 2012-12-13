@@ -34,30 +34,37 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 #----------------------------------------------------------------------
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := device/pantech/presto/prebuilt/kernel/kernel
+    LOCAL_KERNEL := device/pantech/presto/prebuilt/kernel/kernel
 else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+    LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
 PRODUCT_COPY_FILES += \
-	$(LOCAL_KERNEL):kernel
+    $(LOCAL_KERNEL):kernel
 
 #----------------------------------------------------------------------
 
 # Configuration scripts
 PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
+    $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
 
 # IDC
 PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/prebuilt/system/usr/idc/pantech_earjack.idc:system/usr/idc/pantech_earjack.idc
+    $(LOCAL_PATH)/prebuilt/system/usr/idc/pantech_earjack.idc:system/usr/idc/pantech_earjack.idc
+
+# Insecure boot
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/default.prop:root/default.prop
 
 # Needed to reset bootmode when leaving recovery
 PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh \
-	$(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/system/bin/postrecoveryboot.sh
+    $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh \
+    $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/system/bin/postrecoveryboot.sh
 
 # WiFi
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/system/bin/BCM43291A0_003.001.013.0141.0194.hcd:system/bin/BCM43291A0_003.001.013.0141.0194.hcd
+
 #$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
 
 #----------------------------------------------------------------------
@@ -65,26 +72,34 @@ PRODUCT_COPY_FILES += \
 # bugmailer
 PRODUCT_PACKAGES += send_bug
 PRODUCT_COPY_FILES += \
-	system/extras/bugmailer/bugmailer.sh:system/bin/bugmailer.sh \
-	system/extras/bugmailer/send_bug:system/bin/send_bug
+    system/extras/bugmailer/bugmailer.sh:system/bin/bugmailer.sh \
+    system/extras/bugmailer/send_bug:system/bin/send_bug
 
 # lpm
 PRODUCT_PACKAGES += \
-	lpm.rc \
-	init.qcom.lpm_boot.sh
+    lpm.rc \
+    init.qcom.lpm_boot.sh
 
 # Misc
 PRODUCT_PACKAGES += \
-	com.android.future.usb.accessory
+    com.android.future.usb.accessory
 
 # Sensors
 PRODUCT_PACKAGES += \
-	sensors.msm8660
+    sensors.msm8660
 
 # Torch
 PRODUCT_PACKAGES += \
-	Apollo \
-	Torch
+    Apollo \
+    Torch
+
+#----------------------------------------------------------------------
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.heapsize=48m
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    wifi.interface=wlan0
 
 #----------------------------------------------------------------------
 # inherit device/qcom/msm8660-surf/msm8660_surf.mk

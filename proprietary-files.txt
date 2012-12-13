@@ -16,18 +16,7 @@ lib/libmmparser.so
 lib/libqc-opt.so
 lib/libv8.so
 
-# Prebuilt libraries for CAF Chromium plug-ins
-lib/libcneapiclient.so
-lib/libcneqmiutils.so
-lib/libdiag.so
-lib/libdnshostprio.so
-lib/libnetmonitor.so
-lib/libtcpfinaggr.so
-lib/pp_proc_plugin.so
-lib/qnet-plugin.so
-lib/tcp-connections.so
-
-# All the blobs necessary for adreno
+# Adreno
 etc/firmware/a225_pfp.fw
 etc/firmware/a225_pm4.fw
 etc/firmware/a225p5_pm4.fw
@@ -50,6 +39,49 @@ lib/libgsl.so
 lib/libOpenVG.so
 lib/libsc-a2xx.so
 
+# Audio
+lib/libacdbloader.so
+lib/libacdbmapper.so
+lib/libaudcal.so
+lib/libaudioalsa.so
+lib/libaudioparsers.so
+#lib/lib_iec_60958_61937.so
+
+# bins
+bin/battery_charging
+bin/bridgemgrd
+bin/btnvtool
+bin/ds_fmc_appd
+bin/port-bridge
+# Chromium plug-ins
+lib/libcneapiclient.so
+lib/libcneqmiutils.so
+lib/libdiag.so
+lib/libdnshostprio.so
+lib/libnetmonitor.so
+lib/libtcpfinaggr.so
+lib/pp_proc_plugin.so
+lib/qnet-plugin.so
+lib/tcp-connections.so
+
+# Camera
+lib/hw/camera.msm8660.so
+lib/libgemini.so
+lib/libmmipl.so
+lib/libmmjpeg.so
+lib/libmmmpo.so
+lib/libmmstereo.so
+lib/liboemcamera.so
+lib/libOlaEngine.so
+
+# Chromatix
+lib/libchromatix_imx074_default_video.so
+lib/libchromatix_imx074_preview.so
+lib/libchromatix_imx074_zsl.so
+
+# CPU management
+bin/mpdecision
+
 # Firmware
 etc/firmware/cyttsp_8660_ffa.hex
 etc/firmware/cyttsp_8660_fluid_p2.hex
@@ -59,6 +91,14 @@ etc/firmware/dsps_fluid.b01
 etc/firmware/dsps_fluid.b02
 etc/firmware/dsps_fluid.b03
 etc/firmware/dsps_fluid.mdt
+
+# gps
+lib/libcommondefs.so
+lib/libgps.utils.so
+lib/libloc_adapter.so
+lib/libloc_api-rpc-qc.so
+lib/libloc_eng.so
+lib/liboncrpc.so
 
 # Radio
 bin/ks
@@ -82,39 +122,6 @@ lib/libril-qc-qmi-1.so
 lib/libril-qcril-hook-oem.so
 lib/libril.so
 
-#bins
-bin/battery_charging
-bin/BCM43291A0_003.001.013.0141.0149.ORC.hcd
-bin/bridgemgrd
-bin/btnvtool
-bin/ds_fmc_appd
-bin/mpdecision
-bin/port-bridge
-
-# Audio
-lib/libacdbloader.so
-lib/libacdbmapper.so
-lib/libaudcal.so
-lib/libaudioalsa.so
-lib/libaudioparsers.so
-
-# Camera
-lib/hw/camera.msm8660.so
-lib/libgemini.so
-lib/libmmipl.so
-lib/libmmjpeg.so
-lib/libmmmpo.so
-lib/libmmstereo.so
-lib/liboemcamera.so
-
-#gps
-lib/libcommondefs.so
-lib/libgps.utils.so
-lib/libloc_adapter.so
-lib/libloc_api-rpc-qc.so
-lib/libloc_eng.so
-lib/liboncrpc.so
-
 #wifi
 etc/wifi/wpa_supplicant.conf
 etc/wl/bcm43291_apsta.bin
@@ -122,6 +129,7 @@ etc/wl/bcm43291_mfg.bin
 etc/wl/bcm43291_p2p.bin
 etc/wl/bcm43291.bin
 etc/wl/nvram.txt
+lib/libhardware_legacy.so
 
 #sky
 lib/libsky_access_nand.so
@@ -136,5 +144,5 @@ lib/libsky_rawdata.so
 lib/libskyreset.so
 lib/libsky_rftest.so
 lib/libskytestclient.so
-#lib/libsky_touch.so
 lib/libsky_wifi.so
+#lib/libsky_touch.so

@@ -302,7 +302,7 @@ LIBQDUTILS := libqdutils
 LIBQDMETADATA := libqdMetaData
 
 #LIBPOWER
-LIBPOWER := power.qcom.pantech
+LIBPOWER := power.qcom
 
 #LLVM for RenderScript
 #use qcom LLVM
@@ -497,10 +497,10 @@ PRODUCT_PACKAGES += $(VT_JNI)
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \
-	LiveWallpapers \
-	LiveWallpapersPicker \
-	VisualizationWallpapers \
-	librs_jni
+    LiveWallpapers \
+    LiveWallpapersPicker \
+    VisualizationWallpapers \
+    librs_jni
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -535,8 +535,8 @@ PRODUCT_COPY_FILES += \
     system/bluetooth/data/network.conf:system/etc/bluetooth/network.conf \
 
 PRODUCT_COPY_FILES += \
-	device/pantech/presto/media/media_profiles.xml:system/etc/media_profiles.xml \
-	device/pantech/presto/media/media_codecs.xml:system/etc/media_codecs.xml
+    device/pantech/presto/media/media_profiles.xml:system/etc/media_profiles.xml \
+    device/pantech/presto/media/media_codecs.xml:system/etc/media_codecs.xml
 
 # enable overlays to use our version of
 # source/resources etc.
