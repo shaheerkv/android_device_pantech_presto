@@ -21,5 +21,5 @@ You can also include the repository with the necessary files for complilación:
 Device tree works in progress.
 You can find more information at the following links:
 <ul>
-<li>DevsNest website Subforum dedicated to the Pantech Burst: http://www.devsnest.com/viewforum.php?f=2</li>
+<li>DevsNest website Subforum dedicated to the Pantech Burst: http://www.devsnest.com/index.php?board=3.0</li>
 </ul>

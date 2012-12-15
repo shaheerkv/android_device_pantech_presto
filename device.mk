@@ -48,13 +48,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
 
+# EGL config
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/system/lib/egl/egl.cfg:system/lib/egl/egl.cfg
+
 # IDC
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/system/usr/idc/pantech_earjack.idc:system/usr/idc/pantech_earjack.idc
-
-# Insecure boot
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/default.prop:root/default.prop
 
 # Needed to reset bootmode when leaving recovery
 PRODUCT_COPY_FILES += \
@@ -92,14 +92,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Apollo \
     Torch
-
-#----------------------------------------------------------------------
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapsize=48m
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=wlan0
 
 #----------------------------------------------------------------------
 # inherit device/qcom/msm8660-surf/msm8660_surf.mk

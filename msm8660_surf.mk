@@ -8,15 +8,15 @@ PRODUCT_COPY_FILES += \
 
 # Wallpapers
 PRODUCT_PACKAGES += \
-	Galaxy4 \
-	HoloSpiralWallpaper \
-	MagicSmokeWallpapers \
-	NoiseField \
-	PhaseBeam
+    Galaxy4 \
+    HoloSpiralWallpaper \
+    MagicSmokeWallpapers \
+    NoiseField \
+    PhaseBeam
 
 # fstab.qcom
 PRODUCT_PACKAGES += \
-	fstab.qcom
+    fstab.qcom
 
 #----------------------------------------------------------------------
 # inherit device/qcom/common/common.mk
