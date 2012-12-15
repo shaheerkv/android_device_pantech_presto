@@ -1,11 +1,11 @@
 # Prebuilt libraries
-lib/libbcc.so
-lib/libdvm.so
+#lib/libbcc.so
+#lib/libdvm.so
 lib/libgenlock.so
-lib/libmemalloc.so
-lib/liboverlay.so
+#lib/libmemalloc.so
+#lib/liboverlay.so
 lib/libQcomUI.so
-lib/hw/gralloc.msm8660.so
+#lib/hw/gralloc.msm8660.so
 
 # Prebuilt libraries from CodeAurora
 lib/libDivxDrm.so
