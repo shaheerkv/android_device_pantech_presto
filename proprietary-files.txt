@@ -1,11 +1,6 @@
 # Prebuilt libraries
-#lib/libbcc.so
-#lib/libdvm.so
 lib/libgenlock.so
-#lib/libmemalloc.so
-#lib/liboverlay.so
 lib/libQcomUI.so
-#lib/hw/gralloc.msm8660.so
 
 # Prebuilt libraries from CodeAurora
 lib/libDivxDrm.so
@@ -53,16 +48,6 @@ bin/bridgemgrd
 bin/btnvtool
 bin/ds_fmc_appd
 bin/port-bridge
-# Chromium plug-ins
-lib/libcneapiclient.so
-lib/libcneqmiutils.so
-lib/libdiag.so
-lib/libdnshostprio.so
-lib/libnetmonitor.so
-lib/libtcpfinaggr.so
-lib/pp_proc_plugin.so
-lib/qnet-plugin.so
-lib/tcp-connections.so
 
 # Camera
 lib/hw/camera.msm8660.so
@@ -78,6 +63,17 @@ lib/libOlaEngine.so
 lib/libchromatix_imx074_default_video.so
 lib/libchromatix_imx074_preview.so
 lib/libchromatix_imx074_zsl.so
+
+# Chromium plug-ins
+lib/libcneapiclient.so
+lib/libcneqmiutils.so
+lib/libdiag.so
+lib/libdnshostprio.so
+lib/libnetmonitor.so
+lib/libtcpfinaggr.so
+lib/pp_proc_plugin.so
+lib/qnet-plugin.so
+lib/tcp-connections.so
 
 # CPU management
 bin/mpdecision
