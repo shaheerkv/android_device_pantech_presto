@@ -96,6 +96,12 @@ lib/libloc_api-rpc-qc.so
 lib/libloc_eng.so
 lib/liboncrpc.so
 
+# Mediaserver
+lib/libdsm.so
+lib/libnv.so
+lib/liboem_rapi.so
+lib/liboem_rapi_fusion.so
+
 # Radio
 bin/ks
 bin/netmgrd
