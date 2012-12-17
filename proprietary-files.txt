@@ -96,6 +96,13 @@ lib/libloc_api-rpc-qc.so
 lib/libloc_eng.so
 lib/liboncrpc.so
 
+# HAL
+lib/hw/copybit.msm8660.so
+lib/hw/gralloc.default.so
+lib/hw/gralloc.msm8660.so
+lib/hw/lights.msm8660.so
+lib/hw/sensors.msm8660.so
+
 # Mediaserver
 lib/libdsm.so
 lib/libnv.so
