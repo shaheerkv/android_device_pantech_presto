@@ -40,24 +40,56 @@ lib/libacdbmapper.so
 lib/libaudcal.so
 lib/libaudioalsa.so
 lib/libaudioparsers.so
-#lib/lib_iec_60958_61937.so
+lib/lib_iec_60958_61937.so
 
 # bins
+bin/ATFWD-daemon
 bin/battery_charging
 bin/bridgemgrd
 bin/btnvtool
+bin/dalvikvm
 bin/ds_fmc_appd
+bin/e2fsck
+bin/hci_qcomm_init
+bin/mm-qcamera-daemon
+bin/nl_listener
 bin/port-bridge
+bin/qseecomd
+bin/radish
+bin/thermald
+bin/v4l2-qcamera-app
 
 # Camera
 lib/hw/camera.msm8660.so
 lib/libgemini.so
 lib/libmmipl.so
 lib/libmmjpeg.so
+lib/libmmjps.so
 lib/libmmmpo.so
+lib/libmmmpod.so
 lib/libmmstereo.so
+lib/libmmstillomx.so
 lib/liboemcamera.so
 lib/libOlaEngine.so
+
+lib/libcamera_client.so
+lib/libcameraservice.so
+lib/libCommandSvc.so
+lib/libconfigdb.so
+lib/libdrmdiag.so
+lib/libdrmfs.so
+lib/libdrmtime.so
+lib/libdsprofile.so
+lib/libdss.so
+lib/libdsucsd.so
+lib/libI420colorconvert.so
+lib/libimage-jpeg-dec-omx-comp.so
+lib/libimage-jpeg-enc-omx-comp.so
+lib/libimage-omx-common.so
+lib/libOmxAacDec.so
+lib/libOmxWmaDec.so
+lib/libQSEEComAPI.so
+lib/libxml.so
 
 # Chromatix
 lib/libchromatix_imx074_default_video.so
@@ -95,6 +127,7 @@ lib/libloc_adapter.so
 lib/libloc_api-rpc-qc.so
 lib/libloc_eng.so
 lib/liboncrpc.so
+#lib/hw/gps.msm8660.so
 
 # HAL
 lib/hw/copybit.msm8660.so
@@ -131,7 +164,7 @@ lib/libril-qc-qmi-1.so
 lib/libril-qcril-hook-oem.so
 lib/libril.so
 
-#wifi
+# wifi
 etc/wifi/wpa_supplicant.conf
 etc/wl/bcm43291_apsta.bin
 etc/wl/bcm43291_mfg.bin
@@ -140,7 +173,7 @@ etc/wl/bcm43291.bin
 etc/wl/nvram.txt
 lib/libhardware_legacy.so
 
-#sky
+# sky
 lib/libsky_access_nand.so
 lib/libsky_aprlib.so
 lib/libsky_bluetooth.so
@@ -153,5 +186,5 @@ lib/libsky_rawdata.so
 lib/libskyreset.so
 lib/libsky_rftest.so
 lib/libskytestclient.so
+lib/libsky_touch.so
 lib/libsky_wifi.so
-#lib/libsky_touch.so
