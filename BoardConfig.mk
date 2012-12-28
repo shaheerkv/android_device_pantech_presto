@@ -13,6 +13,8 @@
 # limitations under the License.
 #
 
+USE_CAMERA_STUB := true
+
 #----------------------------------------------------------------------
 
 # inherit from the proprietary version
@@ -26,23 +28,33 @@ TARGET_OTA_ASSERT_DEVICE := PantechP9070,presto
 
 #----------------------------------------------------------------------
 
+# Architecture
+TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
+TARGET_CPU_ABI  := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_SMP := true
+ARCH_ARM_HAVE_TLS_REGISTER := true
+
 # Audio
 BOARD_USES_ALSA_AUDIO := false
 BOARD_USES_AUDIO_LEGACY := true
-BOARD_USES_QCOM_AUDIO_V2 := true
+BOARD_USES_GENERIC_AUDIO := false
+BOARD_USE_QCOM_LPA := true
 TARGET_PROVIDES_LIBAUDIO := true
-TARGET_USES_QCOM_LPA := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
-BT_ALT_STACK := true
-BRCM_BT_USE_BTL_IF := true
-BRCM_BTL_INCLUDE_A2DP := true
+TARGET_NEEDS_BLUETOOTH_INIT_DELAY := true
 
 # Camera
+BOARD_PANTECH_CAMERA := true
 BOARD_CAMERA_USE_MM_HEAP := true
 BOARD_NEEDS_MEMORYHEAPPMEM := true
+COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB
+TARGET_DISABLE_ARM_PIE := true
 
 # Charging mode
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
@@ -50,10 +62,9 @@ BOARD_BATTERY_DEVICE_NAME := "battery"
 BOARD_CHARGER_RES := device/pantech/presto/prebuilt/root/res/images/charger
 
 # Flags
-COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB -DQCOM_ACDB_ENABLED
 COMMON_GLOBAL_CFLAGS += -DWITH_QCOM_LPA
 COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
-COMMON_GLOBAL_CFLAGS += -DQCOM_LEGACY_OMX
+COMMON_GLOBAL_CFLAGS += -DQCOM_ACDB_ENABLED -DQCOM_VOIP_ENABLED
 
 # FM Radio
 BOARD_HAVE_FM_RADIO := true
@@ -67,9 +78,13 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := msm8660
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 
 # Graphics
+BOARD_EGL_CFG := device/pantech/presto/prebuilt/system/lib/egl/egl.cfg
 USE_OPENGL_RENDERER := true
 TARGET_USES_C2D_COMPOSITION := true
 TARGET_USES_ION := true
+
+# HDMI
+TARGET_HAVE_HDMI_OUT := false
 
 # liblights on QCOM platforms
 TARGET_PROVIDES_LIBLIGHTS := true
@@ -77,34 +92,42 @@ TARGET_PROVIDES_LIBLIGHTS := true
 #LLVM for RenderScript use qcom LLVM
 BOARD_USE_QCOM_LLVM_CLANG_RS := false
 
+# Platform
+TARGET_BOARD_PLATFORM := msm8660
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
+
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
-BOARD_USE_QCOM_TESTONLY := true
-BOARD_USES_QCNE := true
 BOARD_USES_QCOM_LIBS := true
-TARGET_HAS_S3D_SUPPORT := true
-PROTEUS_DEVICE_API := true
 
-# QCOM adreno
-BOARD_USES_ADRENO_200 := true
-HAVE_ADRENO200_SOURCE := true
-HAVE_ADRENO200_SC_SOURCE := true
-HAVE_ADRENO200_FIRMWARE := true
+# Scorpion optimizations
+TARGET_USE_SCORPION_BIONIC_OPTIMIZATION := true
+TARGET_USE_SCORPION_PLD_SET := true
+TARGET_SCORPION_BIONIC_PLDOFFS := 6
+TARGET_SCORPION_BIONIC_PLDSIZE := 128
 
-# Sensors
-#BOARD_USES_GENERIC_INVENSENSE := false
-#SOMC_CFG_DASH_INCLUDED := yes
-#SENSORS_ACCEL_BMA250_INPUT := true
+# SD Card info
+BOARD_SDCARD_DEVICE_PRIMARY := /dev/block/mmcblk1p1
+BOARD_SDCARD_DEVICE_SECONDARY := /dev/block/mmcblk1
+BOARD_SDEXT_DEVICE := /dev/block/mmcblk1p1
+
+# Target info
+TARGET_USES_OVERLAY := true
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_KERNEL := false
+TARGET_NO_RADIOIMAGE := true
+TARGET_USERIMAGES_USE_EXT4 := true
 
 # Vold
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 BOARD_VOLD_MAX_PARTITIONS := 28
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
 
-# Webkit
+# WebGL
 ENABLE_WEBGL := true
+
+# Webkit
 TARGET_FORCE_CPU_UPLOAD := true
-DYNAMIC_SHARED_LIBV8SO := false
 
 # Wifi related defines
 BOARD_WLAN_DEVICE                   := bcm4329
@@ -112,10 +135,10 @@ BOARD_WLAN_DEVICE_REV               := bcm4329
 BOARD_WPA_SUPPLICANT_DRIVER         := WEXT
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB    := lib_driver_cmd_wext
 WIFI_BAND                           := 802_11_ABG
-WIFI_DRIVER_FW_PATH_AP              := "/system/etc/wl/bcm43291_apsta.bin"
+WIFI_DRIVER_FW_PATH_AP              := "/etc/wl/bcm43291_apsta.bin"
 WIFI_DRIVER_FW_PATH_PARAM           := "/sys/module/wlan/parameters/firmware_path"
-WIFI_DRIVER_FW_PATH_STA             := "/system/etc/wl/bcm43291.bin"
-WIFI_DRIVER_MODULE_ARG              := "firmware_path=/system/etc/wl/bcm43291.bin nvram_path=/system/etc/wl/nvram.txt"
+WIFI_DRIVER_FW_PATH_STA             := "/etc/wl/bcm43291.bin"
+WIFI_DRIVER_MODULE_ARG              := "firmware_path=/etc/wl/bcm43291.bin nvram_path=/etc/wl/nvram.txt iface_name=wlan"
 WIFI_DRIVER_MODULE_NAME             := "wlan"
 WIFI_DRIVER_MODULE_PATH             := "/system/lib/modules/wlan.ko"
 WPA_SUPPLICANT_VERSION              := VER_0_8_X
@@ -133,7 +156,9 @@ TARGET_KERNEL_CONFIG := cyanogenmod_presto_defconfig
 TARGET_KERNEL_SOURCE := kernel/pantech/p9070
 
 # Kernel info
+BOARD_KERNEL_BASE := 0x40200000
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=qcom loglevel=0
+BOARD_KERNEL_PAGESIZE := 2048
 BOARD_FORCE_RAMDISK_ADDRESS := 0x41500000
 
 #----------------------------------------------------------------------
@@ -154,83 +179,16 @@ BOARD_TOMBSTONESIMAGE_PARTITION_SIZE := 268435456   #262144x1024
 
 # Bootloader and recovery
 
-# Use signed boot and recovery image
-#TARGET_BOOTIMG_SIGNED := false
-
 TARGET_BOOTLOADER_BOARD_NAME := presto
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 TARGET_RECOVERY_UI_LIB := librecovery_ui_qcom
+#TARGET_RECOVERY_INITRC := device/pantech/presto/recovery/init.rc
 
 #BOARD_CUSTOM_GRAPHICS := ../../../device/pantech/presto/recovery/graphics.c
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_USES_MMCUTILS := true
 #BOARD_USES_RECOVERY_CHARGEMODE := false
-
-# SD Card info
-BOARD_SDCARD_DEVICE_PRIMARY := /dev/block/mmcblk1p1
-BOARD_SDCARD_DEVICE_SECONDARY := /dev/block/mmcblk1
-BOARD_SDEXT_DEVICE := /dev/block/mmcblk1p1
-
-#----------------------------------------------------------------------
-# import from CAF device/qcom/msm8660_surf/BoardConfig.mk
-#----------------------------------------------------------------------
-
-BOARD_USES_GENERIC_AUDIO := true
-USE_CAMERA_STUB := true
-
-TARGET_USE_HDMI_AS_PRIMARY := false
-
-ifeq ($(TARGET_USE_HDMI_AS_PRIMARY),true)
-    TARGET_HAVE_HDMI_OUT := false
-else
-    TARGET_HAVE_HDMI_OUT := false
-endif # TARGET_USE_HDMI_AS_PRIMARY
-
-# Target info
-TARGET_USES_OVERLAY := true
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_KERNEL := false
-TARGET_NO_RADIOIMAGE := true
-
-# Architecture
-TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
-TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
-TARGET_CPU_ABI  := armeabi-v7a
-TARGET_CPU_ABI2 := armeabi
-TARGET_ARCH_VARIANT := armv7-a-neon
-TARGET_CPU_SMP := true
-ARCH_ARM_HAVE_TLS_REGISTER := true
-
-# Platform
-TARGET_HARDWARE_3D := false
-TARGET_BOARD_PLATFORM := msm8660
-TARGET_AVOID_DRAW_TEXTURE_EXTENSION := true
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
-
-# Kernel info
-BOARD_KERNEL_BASE := 0x40200000
-BOARD_KERNEL_PAGESIZE := 2048
-
-# Misc info
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USES_UNCOMPRESSED_KERNEL := false
-TARGET_USES_LAUNCHER_V1 := true
-
-# Graphics
-BOARD_EGL_CFG := device/pantech/presto/prebuilt/system/lib/egl/egl.cfg
-
-# Scorpion optimizations
-TARGET_USE_SCORPION_BIONIC_OPTIMIZATION := true
-TARGET_USE_SCORPION_PLD_SET := true
-# Set to 9 for 8650A
-TARGET_SCORPION_BIONIC_PLDOFFS := 6
-TARGET_SCORPION_BIONIC_PLDSIZE := 128
-
-HAVE_CYTTSP_FW_UPGRADE := true
-
-# Add NON-HLOS files for ota upgrade
-ADD_RADIO_FILES ?= false
 

@@ -44,6 +44,11 @@ PRODUCT_COPY_FILES += \
 
 #----------------------------------------------------------------------
 
+# BT firmware
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/system/bin/BCM43291A0_003.001.013.0141.0194.hcd:system/bin/BCM43291A0_003.001.013.0141.0194.hcd \
+    system/bluetooth/data/main.conf:system/etc/bluetooth/main.conf
+
 # Configuration scripts
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
@@ -54,18 +59,17 @@ PRODUCT_COPY_FILES += \
 
 # IDC
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/system/usr/idc/pantech_earjack.idc:system/usr/idc/pantech_earjack.idc
+    $(LOCAL_PATH)/prebuilt/system/usr/idc/pantech_earjack.idc:system/usr/idc/pantech_earjack.idc \
+    $(LOCAL_PATH)/prebuilt/system/usr/idc/qt602240_ts_input.idc:system/usr/idc/qt602240_ts_input.idc
 
 # Needed to reset bootmode when leaving recovery
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh \
     $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/system/bin/postrecoveryboot.sh
 
-# WiFi
+# Thermal configuration
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/system/bin/BCM43291A0_003.001.013.0141.0194.hcd:system/bin/BCM43291A0_003.001.013.0141.0194.hcd
-
-#$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
+    $(LOCAL_PATH)/prebuilt/system/etc/thermald.conf:system/etc/thermald.conf
 
 #----------------------------------------------------------------------
 
@@ -74,6 +78,10 @@ PRODUCT_PACKAGES += send_bug
 PRODUCT_COPY_FILES += \
     system/extras/bugmailer/bugmailer.sh:system/bin/bugmailer.sh \
     system/extras/bugmailer/send_bug:system/bin/send_bug
+
+# fstab.qcom
+PRODUCT_PACKAGES += \
+    fstab.qcom
 
 # lpm
 PRODUCT_PACKAGES += \
@@ -88,18 +96,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     sensors.msm8660
 
+# Sky_touch
+PRODUCT_PACKAGES += \
+    libsky_touch
+
 # Torch
 PRODUCT_PACKAGES += \
     Apollo \
     Torch
-
-#----------------------------------------------------------------------
-# import from CAF device/qcom/msm8660_surf/msm8660_surf.mk
-#----------------------------------------------------------------------
-
-# Bluetooth configuration files
-PRODUCT_COPY_FILES += \
-    system/bluetooth/data/main.conf:system/etc/bluetooth/main.conf
 
 # Wallpapers
 PRODUCT_PACKAGES += \
@@ -108,10 +112,6 @@ PRODUCT_PACKAGES += \
     MagicSmokeWallpapers \
     NoiseField \
     PhaseBeam
-
-# fstab.qcom
-PRODUCT_PACKAGES += \
-    fstab.qcom
 
 #----------------------------------------------------------------------
 # inherit device/qcom/common/common.mk

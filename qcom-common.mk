@@ -2,28 +2,6 @@
 # import from CAF device/qcom/common/common.mk
 #----------------------------------------------------------------------
 
-# Board platforms lists to be used for
-# TARGET_BOARD_PLATFORM specific featurization
-QCOM_BOARD_PLATFORMS := msm7627_surf
-QCOM_BOARD_PLATFORMS += msm7627_6x
-QCOM_BOARD_PLATFORMS += msm7627a
-QCOM_BOARD_PLATFORMS += msm7630_surf
-QCOM_BOARD_PLATFORMS += msm7630_fusion
-QCOM_BOARD_PLATFORMS += msm8660
-QCOM_BOARD_PLATFORMS += msm8960
-QCOM_BOARD_PLATFORMS += msm8974
-QCOM_BOARD_PLATFORMS += msm8910
-
-MSM7K_BOARD_PLATFORMS := msm7630_surf
-MSM7K_BOARD_PLATFORMS += msm7630_fusion
-MSM7K_BOARD_PLATFORMS += msm7627_surf
-MSM7K_BOARD_PLATFORMS += msm7627_6x
-MSM7K_BOARD_PLATFORMS += msm7627a
-MSM7K_BOARD_PLATFORMS += msm7k
-
-QSD8K_BOARD_PLATFORMS := qsd8k
-
-
 # Below projects/packages with LOCAL_MODULEs will be used by
 # PRODUCT_PACKAGES to build LOCAL_MODULEs that are tagged with
 # optional tag, which will not be available on target unless
@@ -31,469 +9,384 @@ QSD8K_BOARD_PLATFORMS := qsd8k
 # in CAPs.
 
 #ALSA
-ALSA_HARDWARE := alsa.msm8960
-ALSA_HARDWARE += alsa.msm8974
+PRODUCT_PACKAGES += \
+    alsa.msm8960 \
+    alsa.msm8974
 
-ALSA_UCM := snd_soc_msm
-ALSA_UCM += snd_soc_msm_2x
-ALSA_UCM += snd_soc_msm_2x_mpq
-ALSA_UCM += snd_soc_msm_2x_Fusion3
-ALSA_UCM += snd_soc_msm_Sitar
-ALSA_UCM += snd_soc_msm_auxpcm
-ALSA_UCM += snd_soc_msm_2x_auxpcm
-ALSA_UCM += snd_soc_msm_2x_mpq_auxpcm
-ALSA_UCM += snd_soc_msm_2x_Fusion3_auxpcm
-ALSA_UCM += snd_soc_msm_Sitar_auxpcm
-ALSA_UCM += snd_soc_msm_Taiko
-ALSA_UCM += snd_soc_msm_Taiko_CDP
-ALSA_UCM += snd_soc_msm_Taiko_Fluid
-ALSA_UCM += snd_soc_msm_Taiko_liquid
-ALSA_UCM += snd_soc_msm_I2SFusion
+#ALSA_UCM
+PRODUCT_PACKAGES += \
+    snd_soc_msm \
+    snd_soc_msm_2x \
+    snd_soc_msm_2x_mpq \
+    snd_soc_msm_2x_Fusion3 \
+    snd_soc_msm_Sitar \
+    snd_soc_msm_auxpcm \
+    snd_soc_msm_2x_auxpcm \
+    snd_soc_msm_2x_mpq_auxpcm \
+    snd_soc_msm_2x_Fusion3_auxpcm \
+    snd_soc_msm_Sitar_auxpcm \
+    snd_soc_msm_Taiko \
+    snd_soc_msm_Taiko_CDP \
+    snd_soc_msm_Taiko_Fluid \
+    snd_soc_msm_Taiko_liquid \
+    snd_soc_msm_I2SFusion
 
 #ANGLE
-ANGLE := libangle
+PRODUCT_PACKAGES += \
+    libangle
 
-AUDIO_HARDWARE := audio.primary.mpq8064
-AUDIO_HARDWARE += audio.primary.msm8960
-AUDIO_HARDWARE += audio.primary.msm8974
-AUDIO_HARDWARE += audio.primary.msm8660
-#AUDIO_HARDWARE += audio.primary.msm7627_surf
-AUDIO_HARDWARE += audio.primary.msm7627a
-AUDIO_HARDWARE += audio.primary.msm7630_surf
-AUDIO_HARDWARE += audio.primary.msm7630_fusion
-#AUDIO_HARDWARE += audio.primary.default
-AUDIO_HARDWARE += audio.a2dp.default
-AUDIO_HARDWARE += audio.usb.default
-#
-AUDIO_POLICY := audio_policy.mpq8064
-AUDIO_POLICY += audio_policy.msm8960
-AUDIO_POLICY += audio_policy.msm8974
-AUDIO_POLICY += audio_policy.msm8660
-#AUDIO_POLICY += audio_policy.msm7627_surf
-AUDIO_POLICY += audio_policy.msm7627a
-AUDIO_POLICY += audio_policy.msm7630_surf
-AUDIO_POLICY += audio_policy.msm7630_fusion
-#AUDIO_POLICY += audio_policy.default
-AUDIO_POLICY += audio_policy.conf
-AUDIO_POLICY += audio_policy_8064.conf
+#AUDIO_HARDWARE
+PRODUCT_PACKAGES += \
+    audio.primary.msm8660 \
+    audio.a2dp.default \
+    audio.usb.default
+
+#AUDIO_POLICY
+PRODUCT_PACKAGES += \
+    audio_policy.msm8660 \
+    audio_policy.conf
 
 #AMPLOADER
-AMPLOADER := amploader
+PRODUCT_PACKAGES += \
+    amploader
 
 #APPS
-APPS := QualcommSoftAP
-APPS += TSCalibration
+PRODUCT_PACKAGES += \
+    QualcommSoftAP \
+    TSCalibration
 
 #BSON
-BSON := libbson
+PRODUCT_PACKAGES += \
+    libbson
 
 #BT
-BT := javax.btobex
-BT += libattrib_static
-BT += hcidump.sh
+PRODUCT_PACKAGES += \
+    javax.btobex \
+    libattrib_static \
+    hcidump.sh
 
 #C2DColorConvert
-C2DCC := libc2dcolorconvert
+PRODUCT_PACKAGES += \
+    libc2dcolorconvert
 
 #CIMAX
-CIMAX := libcimax_spi
+PRODUCT_PACKAGES += \
+    libcimax_spi
 
 #CONNECTIVITY
-CONNECTIVITY := cnd
-CONNECTIVITY += librefcne
+PRODUCT_PACKAGES += \
+    cnd \
+    librefcne
 
 #CURL
-CURL := libcurl
-CURL += curl
+PRODUCT_PACKAGES += \
+    libcurl \
+    curl
 
 #E2FSPROGS
-E2FSPROGS := e2fsck
+PRODUCT_PACKAGES += \
+    e2fsck
 
 #GPS
-GPS_HARDWARE := gps.default
-GPS_HARDWARE += gps.mahimahi
-GPS_HARDWARE += libloc_adapter
-GPS_HARDWARE += libgps.utils
-GPS_HARDWARE += libloc_eng
-GPS_HARDWARE += libloc_api_v02
+PRODUCT_PACKAGES += \
+    gps.default \
+    gps.mahimahi \
+    libloc_adapter \
+    libgps.utils \
+    libloc_eng \
+    libloc_api_v02
 
 #HDMID
-HDMID := hdmid
+PRODUCT_PACKAGES += \
+    hdmid
 
 #HOSTAPD
-HOSTAPD := hostapd
-HOSTAPD += hostapd_cli
-HOSTAPD += nt_password_hash
-HOSTAPD += hlr_auc_gw
-HOSTAPD += test-milenage
-HOSTAPD += hostapd.conf
-HOSTAPD += hostapd_default.conf
-HOSTAPD += hostapd.deny
-HOSTAPD += hostapd.accept
+PRODUCT_PACKAGES += \
+    hostapd \
+    hostapd_cli \
+    nt_password_hash \
+    hlr_auc_gw \
+    test-milenage \
+    hostapd.conf \
+    hostapd_default.conf \
+    hostapd.deny \
+    hostapd.accept
 
 #I420COLORCONVERT
-I420CC := libI420colorconvert
+PRODUCT_PACKAGES += \
+    libI420colorconvert
 
 #INIT
-INIT := init.qcom.composition_type.sh
-INIT += init.target.8x25.sh
-INIT += init.qcom.mdm_links.sh
-INIT += init.qcom.modem_links.sh
-INIT += init.qcom.thermal_conf.sh
-INIT += init.qcom.sensor.sh
-INIT += init.target.rc
-INIT += init.qcom.bt.sh
-INIT += init.qcom.coex.sh
-INIT += init.qcom.fm.sh
-INIT += init.qcom.early_boot.sh
-INIT += init.qcom.post_boot.sh
-INIT += init.qcom.syspart_fixup.sh
-INIT += init.qcom.rc
-INIT += init.qcom.sdio.sh
-INIT += init.qcom.sh
-INIT += init.qcom.class_core.sh
-INIT += init.qcom.class_main.sh
-INIT += init.qcom.wifi.sh
-INIT += vold.fstab
-INIT += init.qcom.ril.path.sh
-INIT += init.qcom.ril.sh
-INIT += init.qcom.usb.rc
-INIT += init.qcom.usb.sh
-INIT += usf_post_boot.sh
-INIT += init.qcom.efs.sync.sh
-INIT += ueventd.qcom.rc
-INIT += init.ath3k.bt.sh
-INIT += init.qcom.audio.sh
+PRODUCT_PACKAGES += \
+    init.qcom.composition_type.sh \
+    init.target.8x25.sh \
+    init.qcom.mdm_links.sh \
+    init.qcom.modem_links.sh \
+    init.qcom.thermal_conf.sh \
+    init.qcom.sensor.sh \
+    init.target.rc \
+    init.qcom.bt.sh \
+    init.qcom.coex.sh \
+    init.qcom.fm.sh \
+    init.qcom.early_boot.sh \
+    init.qcom.post_boot.sh \
+    init.qcom.syspart_fixup.sh \
+    init.qcom.rc \
+    init.qcom.sdio.sh \
+    init.qcom.sh \
+    init.qcom.class_core.sh \
+    init.qcom.class_main.sh \
+    init.qcom.wifi.sh \
+    vold.fstab \
+    init.qcom.ril.path.sh \
+    init.qcom.ril.sh \
+    init.qcom.usb.rc \
+    init.qcom.usb.sh \
+    usf_post_boot.sh \
+    init.qcom.efs.sync.sh \
+    ueventd.qcom.rc \
+    init.ath3k.bt.sh \
+    init.qcom.audio.sh
 
 #IPROUTE2
-IPROUTE2 := ip
-IPROUTE2 += libiprouteutil
+PRODUCT_PACKAGES += \
+    ip \
+    libiprouteutil
 
 #IPTABLES
-IPTABLES := libiptc
-IPTABLES += libext
-IPTABLES += iptables
+PRODUCT_PACKAGES += \
+    libiptc \
+    libext \
+    iptables
 
 #KERNEL_TESTS
-KERNEL_TESTS := mm-audio-native-test
+PRODUCT_PACKAGES += \
+    mm-audio-native-test
 
 #KEYPAD
-KEYPAD := ffa-keypad_qwerty.kcm
-KEYPAD += ffa-keypad_numeric.kcm
-KEYPAD += fluid-keypad_qwerty.kcm
-KEYPAD += fluid-keypad_numeric.kcm
-KEYPAD += surf_keypad_qwerty.kcm
-KEYPAD += surf_keypad_numeric.kcm
-KEYPAD += surf_keypad.kcm
-KEYPAD += 7k_ffa_keypad.kcm
-KEYPAD += 7x27a_kp.kcm
-KEYPAD += keypad_8960_qwerty.kcm
-KEYPAD += 7k_ffa_keypad.kl
-KEYPAD += 7k_handset.kl
-KEYPAD += 7x27a_kp.kl
-KEYPAD += 8660_handset.kl
-KEYPAD += atmel_mxt_ts.kl
-KEYPAD += cyttsp-i2c.kl
-KEYPAD += ft5x06_ts.kl
-KEYPAD += ffa-keypad.kl
-KEYPAD += fluid-keypad.kl
-KEYPAD += gpio-keys.kl
-KEYPAD += keypad_8960.kl
-KEYPAD += keypad_8960_liquid.kl
-KEYPAD += Button_Jack.kl
-KEYPAD += msm_tma300_ts.kl
-KEYPAD += philips_remote_ir.kl
-KEYPAD += samsung_remote_ir.kl
-KEYPAD += surf_keypad.kl
-KEYPAD += ue_rf4ce_remote.kl
+PRODUCT_PACKAGES += \
+    ffa-keypad_qwerty.kcm \
+    ffa-keypad_numeric.kcm \
+    fluid-keypad_qwerty.kcm \
+    fluid-keypad_numeric.kcm \
+    8660_handset.kl \
+    cyttsp-i2c.kl \
+    ffa-keypad.kl \
+    fluid-keypad.kl
 
 #KS
-KS := ks
-KS += qcks
-KS += efsks
+PRODUCT_PACKAGES += \
+    ks \
+    qcks \
+    efsks
 
 #LIBCAMERA
-LIBCAMERA := camera.msm8974
-LIBCAMERA += camera.msm8960
-LIBCAMERA += camera.msm8660
-LIBCAMERA += camera.msm7630_surf
-LIBCAMERA += camera.msm7630_fusion
-LIBCAMERA += camera.msm7627a
-LIBCAMERA += libcamera
-LIBCAMERA += libmmcamera_interface
-LIBCAMERA += libmmcamera_interface2
-LIBCAMERA += libmmjpeg_interface
-LIBCAMERA += mm-qcamera-app
+PRODUCT_PACKAGES += \
+    camera.msm8660 \
+    libcamera \
+    libmmcamera_interface \
+    libmmcamera_interface2 \
+    libmmjpeg_interface \
+    mm-qcamera-app
 
-#LIBCOPYBIT
-LIBCOPYBIT := copybit.msm8660
-LIBCOPYBIT += copybit.msm8960
-LIBCOPYBIT += copybit.msm8974
-LIBCOPYBIT += copybit.msm7k
-LIBCOPYBIT += copybit.qsd8k
-LIBCOPYBIT += copybit.msm7630_surf
-LIBCOPYBIT += copybit.msm7630_fusion
-LIBCOPYBIT += copybit.msm7627_surf
-LIBCOPYBIT += copybit.msm7627_6x
-LIBCOPYBIT += copybit.msm7627a
+#LIBCOPYBITP
+PRODUCT_PACKAGES += \
+    copybit.msm8660
 
 #LIBGESTURES
-LIBGESTURES := libgestures
-LIBGESTURES += gestures.msm8960
+PRODUCT_PACKAGES += \
+    libgestures
 
 #LIBGRALLOC
-LIBGRALLOC := gralloc.default
-LIBGRALLOC += gralloc.msm8660
-LIBGRALLOC += gralloc.msm8960
-LIBGRALLOC += gralloc.msm8974
-LIBGRALLOC += gralloc.msm7k
-LIBGRALLOC += gralloc.msm7630_surf
-LIBGRALLOC += gralloc.msm7630_fusion
-LIBGRALLOC += gralloc.msm7627_surf
-LIBGRALLOC += gralloc.msm7627_6x
-LIBGRALLOC += gralloc.msm7627a
-LIBGRALLOC += libmemalloc
+PRODUCT_PACKAGES += \
+    gralloc.default \
+    gralloc.msm8660 \
+    libmemalloc
 
 #LIBLIGHTS
-LIBLIGHTS := lights.msm8660
-LIBLIGHTS += lights.msm8960
-LIBLIGHTS += lights.msm8974
-LIBLIGHTS += lights.msm7k
-LIBLIGHTS += lights.msm7630_surf
-LIBLIGHTS += lights.msm7630_fusion
-LIBLIGHTS += lights.msm7627_surf
-LIBLIGHTS += lights.msm7627_6x
-LIBLIGHTS += lights.msm7627a
+PRODUCT_PACKAGES += \
+    lights.msm8660
 
 #LIBHWCOMPOSER
-LIBHWCOMPOSER := hwcomposer.msm8660
-LIBHWCOMPOSER += hwcomposer.msm8960
-LIBHWCOMPOSER += hwcomposer.msm8974
-LIBHWCOMPOSER += hwcomposer.msm7k
-LIBHWCOMPOSER += hwcomposer.msm7630_surf
-LIBHWCOMPOSER += hwcomposer.msm7630_fusion
-LIBHWCOMPOSER += hwcomposer.msm7627_surf
-LIBHWCOMPOSER += hwcomposer.msm7627_6x
-LIBHWCOMPOSER += hwcomposer.msm7627a
+PRODUCT_PACKAGES += \
+    hwcomposer.msm8660
 
 #LIBAUDIOPARAM -- Exposing AudioParameter as dynamic library for SRS TruMedia to work
-LIBAUDIOPARAM := libaudioparameter
+PRODUCT_PACKAGES += \
+    libaudioparameter
 
 #LIBOPENCOREHW
-LIBOPENCOREHW := libopencorehw
+PRODUCT_PACKAGES += \
+    libopencorehw
 
 #LIBOVERLAY
-LIBOVERLAY := liboverlay
-LIBOVERLAY += overlay.default
+PRODUCT_PACKAGES += \
+    liboverlay \
+    overlay.default
 
 #LIBGENLOCK
-LIBGENLOCK := libgenlock
+PRODUCT_PACKAGES += \
+    libgenlock
 
 #LIBPERFLOCK
-LIBPERFLOCK := org.codeaurora.Performance
+PRODUCT_PACKAGES += \
+    org.codeaurora.Performance
 
 #LIBQCOMUI
-LIBQCOMUI := libQcomUI
+PRODUCT_PACKAGES += \
+    libQcomUI
 
 #LIBQDUTILS
-LIBQDUTILS := libqdutils
+PRODUCT_PACKAGES += \
+    libqdutils
 
 #LIBQDMETADATA
-LIBQDMETADATA := libqdMetaData
+PRODUCT_PACKAGES += \
+    libqdMetaData
 
 #LIBPOWER
-LIBPOWER := power.qcom
-
-#LLVM for RenderScript
-#use qcom LLVM
-$(call inherit-product, device/pantech/presto/llvm-select.mk)
+PRODUCT_PACKAGES += \
+    power.qcom
 
 #LOC_API
-LOC_API := libloc_api-rpc-qc
+PRODUCT_PACKAGES += \
+    libloc_api-rpc-qc
 
 #MEDIA_PROFILES
-MEDIA_PROFILES := media_profiles.xml
+PRODUCT_PACKAGES += \
+    media_profiles.xml
 
 #MM_AUDIO
-MM_AUDIO := libOmxAacDec
-MM_AUDIO += libOmxAacEnc
-MM_AUDIO += libOmxAmrEnc
-MM_AUDIO += libOmxEvrcEnc
-MM_AUDIO += libOmxMp3Dec
-MM_AUDIO += libOmxQcelp13Enc
-MM_AUDIO += libOmxAc3HwDec
-MM_AUDIO += mm-adec-omxaac-test
-MM_AUDIO += mm-adec-omxmp3-test
-MM_AUDIO += mm-aenc-omxaac-test
-MM_AUDIO += mm-aenc-omxamr-test
-MM_AUDIO += mm-aenc-omxevrc-test
-MM_AUDIO += mm-aenc-omxqcelp13-test
-MM_AUDIO += sw-adec-omxaac-test
-MM_AUDIO += sw-adec-omxamr-test
-MM_AUDIO += sw-adec-omxamrwb-test
-MM_AUDIO += sw-adec-omxmp3-test
+PRODUCT_PACKAGES += \
+    libOmxAacEnc \
+    libOmxAmrEnc \
+    libOmxEvrcEnc \
+    libOmxMp3Dec \
+    libOmxQcelp13Enc \
+    libOmxAc3HwDec \
+    mm-adec-omxaac-test \
+    mm-adec-omxmp3-test \
+    mm-aenc-omxaac-test \
+    mm-aenc-omxamr-test \
+    mm-aenc-omxevrc-test \
+    mm-aenc-omxqcelp13-test \
+    sw-adec-omxaac-test \
+    sw-adec-omxamr-test \
+    sw-adec-omxamrwb-test \
+    sw-adec-omxmp3-test
 
 #MM_CORE
-MM_CORE := libmm-omxcore
-MM_CORE += libOmxCore
+PRODUCT_PACKAGES += \
+    libmm-omxcore \
+    libOmxCore
 
 #MM_VIDEO
-MM_VIDEO := ast-mm-vdec-omx-test
-MM_VIDEO += libdivxdrmdecrypt
-MM_VIDEO += liblasic
-MM_VIDEO += libOmxVdec
-MM_VIDEO += libOmxVenc
-MM_VIDEO += libOmxVidEnc
-MM_VIDEO += mm-vdec-omx-property-mgr
-MM_VIDEO += mm-vdec-omx-test
-MM_VIDEO += mm-venc-omx-test
-MM_VIDEO += mm-venc-omx-test720p
-MM_VIDEO += mm-video-driver-test
-MM_VIDEO += mm-video-encdrv-test
+PRODUCT_PACKAGES += \
+    ast-mm-vdec-omx-test \
+    libdivxdrmdecrypt \
+    liblasic \
+    libOmxVdec \
+    libOmxVenc \
+    libOmxVidEnc \
+    mm-vdec-omx-property-mgr \
+    mm-vdec-omx-test \
+    mm-venc-omx-test \
+    mm-venc-omx-test720p \
+    mm-video-driver-test \
+    mm-video-encdrv-test
 
 #OPENCORE
-OPENCORE := libomx_aacdec_sharedlibrary
-OPENCORE += libomx_amrdec_sharedlibrary
-OPENCORE += libomx_amrenc_sharedlibrary
-OPENCORE += libomx_avcdec_sharedlibrary
-OPENCORE += libomx_m4vdec_sharedlibrary
-OPENCORE += libomx_mp3dec_sharedlibrary
-OPENCORE += libomx_sharedlibrary
-OPENCORE += libopencore_author
-OPENCORE += libopencore_common
-OPENCORE += libopencore_download
-OPENCORE += libopencore_downloadreg
-OPENCORE += libopencore_mp4local
-OPENCORE += libopencore_mp4localreg
-OPENCORE += libopencore_net_support
-OPENCORE += libopencore_player
-OPENCORE += libopencore_rtsp
-OPENCORE += libopencore_rtspreg
-OPENCORE += libpvdecoder_gsmamr
-OPENCORE += libpvplayer_engine
-OPENCORE += libpvamrwbdecoder
-OPENCORE += libpvauthorengine
-OPENCORE += libomx_amr_component_lib
-OPENCORE += pvplayer
-OPENCORE += pvplayer_engine_test
+PRODUCT_PACKAGES += \
+    libomx_aacdec_sharedlibrary \
+    libomx_amrdec_sharedlibrary \
+    libomx_amrenc_sharedlibrary \
+    libomx_avcdec_sharedlibrary \
+    libomx_m4vdec_sharedlibrary \
+    libomx_mp3dec_sharedlibrary \
+    libomx_sharedlibrary \
+    libopencore_author \
+    libopencore_common \
+    libopencore_download \
+    libopencore_downloadreg \
+    libopencore_mp4local \
+    libopencore_mp4localreg \
+    libopencore_net_support \
+    libopencore_player \
+    libopencore_rtsp \
+    libopencore_rtspreg \
+    libpvdecoder_gsmamr \
+    libpvplayer_engine \
+    libpvamrwbdecoder \
+    libpvauthorengine \
+    libomx_amr_component_lib \
+    pvplayer \
+    pvplayer_engine_test
 
 #PPP
-PPP := ip-up-vpn
+PRODUCT_PACKAGES += \
+    ip-up-vpn
 
 #PVOMX
-PVOMX := libqcomm_omx
-PVOMX += 01_qcomm_omx
+PRODUCT_PACKAGES += \
+    libqcomm_omx \
+    01_qcomm_omx
 
 #RF4CE
-RF4CE := RemoTI_RNP.cfg
-RF4CE += rf4ce
-
-#SENSORS_HARDWARE
-SENSORS_HARDWARE := sensors.msm7630_surf
-SENSORS_HARDWARE += sensors.msm7630_fusion
+PRODUCT_PACKAGES += \
+    RemoTI_RNP.cfg \
+    rf4ce
 
 #SOFTAP
-SOFTAP := libQWiFiSoftApCfg
-SOFTAP += libqsap_sdk
+PRODUCT_PACKAGES += \
+    libQWiFiSoftApCfg \
+    libqsap_sdk
 
 #STK
-STK := Stk
+PRODUCT_PACKAGES += \
+    Stk
 
 #STM LOG
-STMLOG := libstm-log
+PRODUCT_PACKAGES += \
+    libstm-log
 
 #TSLIB_EXTERNAL
-TSLIB_EXTERNAL := corgi
-TSLIB_EXTERNAL += dejitter
-TSLIB_EXTERNAL += inputraw
-TSLIB_EXTERNAL += linear
-TSLIB_EXTERNAL += variance
-TSLIB_EXTERNAL += pthres
-TSLIB_EXTERNAL += libtslib
-TSLIB_EXTERNAL += tsprint
-TSLIB_EXTERNAL += tstest
-TSLIB_EXTERNAL += tsutils
-TSLIB_EXTERNAL += tscalib
-TSLIB_EXTERNAL += ts
+PRODUCT_PACKAGES += \
+    corgi \
+    dejitter \
+    inputraw \
+    linear \
+    variance \
+    pthres \
+    libtslib \
+    tsprint \
+    tstest \
+    tsutils \
+    tscalib \
+    ts
 
 #QRGND
-QRGND := qrngd
-QRGND += qrngtest
+PRODUCT_PACKAGES += \
+    qrngd \
+    qrngtest
 
 #WPA
-WPA := wpa_supplicant.conf
+PRODUCT_PACKAGES += \
+    wpa_supplicant.conf
 
 #ZLIB
-ZLIB := gzip
-ZLIB += minigzip
-ZLIB += libunz
+PRODUCT_PACKAGES += \
+    gzip \
+    minigzip \
+    libunz
 
 #Charger
-CHARGER := charger
-CHARGER += charger_res_images
+PRODUCT_PACKAGES += \
+    charger \
+    charger_res_images
 
 #VT_JNI
-VT_JNI := libvt_jni
-
-PRODUCT_PACKAGES += $(ALSA_HARDWARE)
-PRODUCT_PACKAGES += $(ALSA_UCM)
-PRODUCT_PACKAGES += $(ANGLE)
-PRODUCT_PACKAGES += $(AUDIO_HARDWARE)
-PRODUCT_PACKAGES += $(AUDIO_POLICY)
-PRODUCT_PACKAGES += $(AMPLOADER)
-PRODUCT_PACKAGES += $(APPS)
-PRODUCT_PACKAGES += $(BSON)
-PRODUCT_PACKAGES += $(BT)
-PRODUCT_PACKAGES += $(C2DCC)
-PRODUCT_PACKAGES += $(CIMAX)
-PRODUCT_PACKAGES += $(CONNECTIVITY)
-PRODUCT_PACKAGES += $(CHARGER)
-PRODUCT_PACKAGES += $(CURL)
-PRODUCT_PACKAGES += $(E2FSPROGS)
-PRODUCT_PACKAGES += $(GPS_HARDWARE)
-PRODUCT_PACKAGES += $(HDMID)
-PRODUCT_PACKAGES += $(HOSTAPD)
-PRODUCT_PACKAGES += $(I420CC)
-PRODUCT_PACKAGES += $(INIT)
-PRODUCT_PACKAGES += $(IPROUTE2)
-PRODUCT_PACKAGES += $(IPTABLES)
-PRODUCT_PACKAGES += $(KERNEL_TESTS)
-PRODUCT_PACKAGES += $(KEYPAD)
-PRODUCT_PACKAGES += $(KS)
-PRODUCT_PACKAGES += $(LIBCAMERA)
-PRODUCT_PACKAGES += $(LIBGESTURES)
-PRODUCT_PACKAGES += $(LIBCOPYBIT)
-PRODUCT_PACKAGES += $(LIBGRALLOC)
-PRODUCT_PACKAGES += $(LIBLIGHTS)
-PRODUCT_PACKAGES += $(LIBAUDIOPARAM)
-PRODUCT_PACKAGES += $(LIBOPENCOREHW)
-PRODUCT_PACKAGES += $(LIBOVERLAY)
-PRODUCT_PACKAGES += $(LIBHWCOMPOSER)
-PRODUCT_PACKAGES += $(LIBGENLOCK)
-PRODUCT_PACKAGES += $(LIBPERFLOCK)
-PRODUCT_PACKAGES += $(LIBQCOMUI)
-PRODUCT_PACKAGES += $(LIBQDUTILS)
-PRODUCT_PACKAGES += $(LIBQDMETADATA)
-PRODUCT_PACKAGES += $(LIBPOWER)
-PRODUCT_PACKAGES += $(LOC_API)
-PRODUCT_PACKAGES += $(MEDIA_PROFILES)
-PRODUCT_PACKAGES += $(MM_AUDIO)
-PRODUCT_PACKAGES += $(MM_CORE)
-PRODUCT_PACKAGES += $(MM_VIDEO)
-PRODUCT_PACKAGES += $(OPENCORE)
-PRODUCT_PACKAGES += $(PPP)
-PRODUCT_PACKAGES += $(PVOMX)
-PRODUCT_PACKAGES += $(RF4CE)
-PRODUCT_PACKAGES += $(SENSORS_HARDWARE)
-PRODUCT_PACKAGES += $(SOFTAP)
-PRODUCT_PACKAGES += $(STK)
-PRODUCT_PACKAGES += $(STMLOG)
-PRODUCT_PACKAGES += $(TSLIB_EXTERNAL)
-PRODUCT_PACKAGES += $(QRGND)
-PRODUCT_PACKAGES += $(UPDATER)
-PRODUCT_PACKAGES += $(WPA)
-PRODUCT_PACKAGES += $(ZLIB)
-PRODUCT_PACKAGES += $(VT_JNI)
+PRODUCT_PACKAGES += \
+    libvt_jni
 
 # Live Wallpapers
 PRODUCT_PACKAGES += \
@@ -507,7 +400,7 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
 
-PRODUCT_COPY_FILES := \
+PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
@@ -538,13 +431,13 @@ PRODUCT_COPY_FILES += \
     device/pantech/presto/media/media_profiles.xml:system/etc/media_profiles.xml \
     device/pantech/presto/media/media_codecs.xml:system/etc/media_codecs.xml
 
-# enable overlays to use our version of
-# source/resources etc.
-DEVICE_PACKAGE_OVERLAYS += device/pantech/presto/overlay
-
 # Propertys spacific for this device
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=/system/lib/libqc-opt.so
+
+#LLVM for RenderScript
+#use qcom LLVM
+$(call inherit-product, device/pantech/presto/llvm-select.mk)
 
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 

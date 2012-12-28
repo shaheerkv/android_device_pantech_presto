@@ -127,7 +127,6 @@ lib/libloc_adapter.so
 lib/libloc_api-rpc-qc.so
 lib/libloc_eng.so
 lib/liboncrpc.so
-#lib/hw/gps.msm8660.so
 
 # HAL
 lib/hw/copybit.msm8660.so
