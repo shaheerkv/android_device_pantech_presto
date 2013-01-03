@@ -172,6 +172,10 @@ etc/wl/bcm43291.bin
 etc/wl/nvram.txt
 lib/libhardware_legacy.so
 
+# Yamaha
+bin/geomagneticd
+bin/orientationd
+
 # sky
 lib/libsky_access_nand.so
 lib/libsky_aprlib.so
