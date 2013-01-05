@@ -71,6 +71,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/system/etc/thermald.conf:system/etc/thermald.conf
 
+# Wifi (bcmdhd)
+#$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
+
 #----------------------------------------------------------------------
 
 # bugmailer
