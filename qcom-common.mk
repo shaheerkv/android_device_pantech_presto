@@ -8,29 +8,6 @@
 # explicitly list here. Where project corresponds to the vars here
 # in CAPs.
 
-#ALSA
-PRODUCT_PACKAGES += \
-    alsa.msm8960 \
-    alsa.msm8974
-
-#ALSA_UCM
-PRODUCT_PACKAGES += \
-    snd_soc_msm \
-    snd_soc_msm_2x \
-    snd_soc_msm_2x_mpq \
-    snd_soc_msm_2x_Fusion3 \
-    snd_soc_msm_Sitar \
-    snd_soc_msm_auxpcm \
-    snd_soc_msm_2x_auxpcm \
-    snd_soc_msm_2x_mpq_auxpcm \
-    snd_soc_msm_2x_Fusion3_auxpcm \
-    snd_soc_msm_Sitar_auxpcm \
-    snd_soc_msm_Taiko \
-    snd_soc_msm_Taiko_CDP \
-    snd_soc_msm_Taiko_Fluid \
-    snd_soc_msm_Taiko_liquid \
-    snd_soc_msm_I2SFusion
-
 #ANGLE
 PRODUCT_PACKAGES += \
     libangle
@@ -380,9 +357,7 @@ PRODUCT_PACKAGES += \
     libunz
 
 #Charger
-PRODUCT_PACKAGES += \
-    charger \
-    charger_res_images
+PRODUCT_PACKAGES += charger charger_res_images
 
 #VT_JNI
 PRODUCT_PACKAGES += \
@@ -418,15 +393,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml \
 
-# Bluetooth configuration files
-PRODUCT_COPY_FILES += \
-    system/bluetooth/data/audio.conf:system/etc/bluetooth/audio.conf \
-    system/bluetooth/data/auto_pairing.conf:system/etc/bluetooth/auto_pairing.conf \
-    system/bluetooth/data/blacklist.conf:system/etc/bluetooth/blacklist.conf \
-#   system/bluetooth/data/iop_device_list.conf:system/etc/bluetooth/iop_device_list.conf \
-    system/bluetooth/data/input.conf:system/etc/bluetooth/input.conf \
-    system/bluetooth/data/network.conf:system/etc/bluetooth/network.conf \
-
+# Media configuration
 PRODUCT_COPY_FILES += \
     device/pantech/presto/media/media_profiles.xml:system/etc/media_profiles.xml \
     device/pantech/presto/media/media_codecs.xml:system/etc/media_codecs.xml
