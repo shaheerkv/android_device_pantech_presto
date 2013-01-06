@@ -63,6 +63,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/root/sbin/postrecoveryboot.sh \
     $(LOCAL_PATH)/recovery/postrecoveryboot.sh:recovery/system/bin/postrecoveryboot.sh
 
+#NVRAM setup
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/prebuilt/system/vendor/firmware/nvram_net.txt:system/vendor/firmware/nvram_net.txt
+
 # Thermal configuration
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/system/etc/thermald.conf:system/etc/thermald.conf
