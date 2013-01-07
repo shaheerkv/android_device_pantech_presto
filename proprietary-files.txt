@@ -1,5 +1,5 @@
 # Prebuilt libraries
-lib/libgenlock.so
+#lib/libgenlock.so
 lib/libQcomUI.so
 
 # Prebuilt libraries from CodeAurora
@@ -23,7 +23,7 @@ etc/firmware/yamato_pfp.fw
 etc/firmware/yamato_pm4.fw
 lib/egl/eglsubAndroid.so
 lib/egl/libEGL_adreno200.so
-lib/egl/libGLES_android.so
+#lib/egl/libGLES_android.so
 lib/egl/libGLESv1_CM_adreno200.so
 lib/egl/libGLESv2_adreno200.so
 lib/egl/libGLESv2S3D_adreno200.so
@@ -47,9 +47,9 @@ bin/ATFWD-daemon
 bin/battery_charging
 bin/bridgemgrd
 bin/btnvtool
-bin/dalvikvm
+#bin/dalvikvm
 bin/ds_fmc_appd
-bin/e2fsck
+#bin/e2fsck
 bin/hci_qcomm_init
 bin/mm-qcamera-daemon
 bin/nl_listener
@@ -71,9 +71,9 @@ lib/libmmstereo.so
 lib/libmmstillomx.so
 lib/liboemcamera.so
 lib/libOlaEngine.so
+#lib/libcamera_client.so
+#lib/libcameraservice.so
 
-lib/libcamera_client.so
-lib/libcameraservice.so
 lib/libCommandSvc.so
 lib/libconfigdb.so
 lib/libdrmdiag.so
@@ -82,7 +82,7 @@ lib/libdrmtime.so
 lib/libdsprofile.so
 lib/libdss.so
 lib/libdsucsd.so
-lib/libI420colorconvert.so
+#lib/libI420colorconvert.so
 lib/libimage-jpeg-dec-omx-comp.so
 lib/libimage-jpeg-enc-omx-comp.so
 lib/libimage-omx-common.so
@@ -129,10 +129,10 @@ lib/libloc_eng.so
 lib/liboncrpc.so
 
 # HAL
-lib/hw/copybit.msm8660.so
-lib/hw/gralloc.default.so
-lib/hw/gralloc.msm8660.so
-lib/hw/lights.msm8660.so
+#lib/hw/copybit.msm8660.so
+#lib/hw/gralloc.default.so
+#lib/hw/gralloc.msm8660.so
+#lib/hw/lights.msm8660.so
 lib/hw/sensors.msm8660.so
 
 # Mediaserver
@@ -147,7 +147,7 @@ bin/netmgrd
 bin/qcks
 bin/qmiproxy
 bin/qmuxd
-bin/rild
+#bin/rild
 bin/rmt_storage
 lib/libdsi_netctrl.so
 lib/libdsutils.so
@@ -158,19 +158,19 @@ lib/libqdp.so
 lib/libqmi.so
 lib/libqmiservices.so
 lib/libqueue.so
-lib/libreference-ril.so
+#lib/libreference-ril.so
 lib/libril-qc-qmi-1.so
 lib/libril-qcril-hook-oem.so
-lib/libril.so
+#lib/libril.so
 
 # wifi
-etc/wifi/wpa_supplicant.conf
+#etc/wifi/wpa_supplicant.conf
 etc/wl/bcm43291_apsta.bin
 etc/wl/bcm43291_mfg.bin
 etc/wl/bcm43291_p2p.bin
 etc/wl/bcm43291.bin
 etc/wl/nvram.txt
-lib/libhardware_legacy.so
+#lib/libhardware_legacy.so
 
 # Yamaha
 bin/geomagneticd
