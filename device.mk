@@ -149,13 +149,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0
 
-# Set default USB interface
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mass_storage
-
 #----------------------------------------------------------------------
 # inherit device/qcom/common/common.mk
 #----------------------------------------------------------------------
 
 $(call inherit-product-if-exists, device/pantech/presto/qcom-common.mk)
-
