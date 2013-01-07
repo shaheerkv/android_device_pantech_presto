@@ -141,6 +141,10 @@ lib/libnv.so
 lib/liboem_rapi.so
 lib/liboem_rapi_fusion.so
 
+# Misc
+lib/libnv_fusion.so
+lib/libsyslog.so
+
 # Radio
 bin/ks
 bin/netmgrd
