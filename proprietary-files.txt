@@ -9,7 +9,7 @@ lib/libmmosal.so
 lib/libmmparser_divxdrmlib.so
 lib/libmmparser.so
 lib/libqc-opt.so
-lib/libv8.so
+#lib/libv8.so
 
 # Adreno
 etc/firmware/a225_pfp.fw
@@ -169,11 +169,11 @@ lib/libril-qcril-hook-oem.so
 
 # wifi
 #etc/wifi/wpa_supplicant.conf
-etc/wl/bcm43291_apsta.bin
-etc/wl/bcm43291_mfg.bin
-etc/wl/bcm43291_p2p.bin
-etc/wl/bcm43291.bin
-etc/wl/nvram.txt
+#etc/wl/bcm43291_apsta.bin
+#etc/wl/bcm43291_mfg.bin
+#etc/wl/bcm43291_p2p.bin
+#etc/wl/bcm43291.bin
+#etc/wl/nvram.txt
 #lib/libhardware_legacy.so
 
 # Yamaha
