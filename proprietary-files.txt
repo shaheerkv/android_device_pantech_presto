@@ -3,7 +3,7 @@
 lib/libQcomUI.so
 
 # Prebuilt libraries from CodeAurora
-lib/libDivxDrm.so
+#lib/libDivxDrm.so
 lib/libmm-color-convertor.so
 lib/libmmosal.so
 lib/libmmparser_divxdrmlib.so
