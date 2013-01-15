@@ -87,6 +87,7 @@ PRODUCT_PACKAGES += libI420colorconvert
 
 #INIT
 PRODUCT_PACKAGES += \
+    init.presto.rc \
 #    init.qcom.composition_type.sh \
 #    init.target.8x25.sh \
     init.qcom.mdm_links.sh \
