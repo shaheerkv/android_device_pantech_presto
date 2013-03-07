@@ -616,10 +616,10 @@ on property:vold.decrypt=trigger_restart_framework
 #    disabled
 #    oneshot
 
-service skytestserver /system/bin/logwrapper /system/bin/skytestserver
-    class main #DATA_ENCRYPTION
-    socket skytest stream 666
-    user root
+#service skytestserver /system/bin/logwrapper /system/bin/skytestserver
+#    class main #DATA_ENCRYPTION
+#    socket skytest stream 666
+#    user root
 
 service charger /charger
     class charger
