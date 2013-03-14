@@ -16,6 +16,8 @@
 
 #----------------------------------------------------------------------
 
+USE_CAMERA_STUB := true
+
 # inherit from the proprietary version
 -include vendor/pantech/presto/BoardConfigVendor.mk
 
