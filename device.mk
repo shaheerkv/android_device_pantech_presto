@@ -33,8 +33,6 @@ DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
 # Radio fixes
 FRAMEWORKS_BASE_SUBDIRS += ../../$(LOCAL_PATH)/ril/
-# Camera fixes
-FRAMEWORKS_AV_SUBDIRS += ../../$(LOCAL_PATH)/camera/
 
 #----------------------------------------------------------------------
 
