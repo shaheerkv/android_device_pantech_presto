@@ -199,15 +199,31 @@ public class PantechQualcommUiccRIL extends QualcommSharedRIL implements Command
         for (int i = 0 ; i < numInts ; i++) {
             response[i] = p.readInt();
         }
-    Log.d(LOG_TAG, "BEFORE respons0 = " + response[0] + " 1= " + response[1] + " 2= " + response[2] + " 3= " + response[3] + " 4= " + response[4] + " 5= " + response[5] + " 6= " + response[6] + " 7= " + response[7] + " 8= " + response[8] + " 9= " + response[9] + " 10= " + response[10] + " 11= " + response[11]);
-// response[8] LTE not enabled? then 8-11 = -1 and after that gsm signal strength will be used
+        Log.d(LOG_TAG, "BEFORE respons0 = " + response[0] + " 1= " + response[1] + " 2= " + response[2] + " 3= " + response[3] + " 4= " + response[4] + " 5= " + response[5] + " 6= " + response[6] + " 7= " + response[7] + " 8= " + response[8] + " 9= " + response[9] + " 10= " + response[10] + " 11= " + response[11]);
+            // response[8] LTE not enabled? then 8-11 = -1 and after that gsm signal strength will be used
+	    // response from 0 to 13:
+	    //mGsmSignalStrength;
+	    //mGwlAntLevel;
+	    //mGsmBitErrorRate;
+	    //mCdmaDbm;
+	    //mCdmaEcio;
+	    //mEvdoDbm;
+	    //mEvdoEcio;
+	    //mEvdoSnr;
+	    //mLteSignalStrength;
+	    //mLteRsrp;
+	    //mLteRsrq;
+	    //mLteRssnr;
+	    //mLteCqi;
+	    //isGsm = true;
+
 	    if (response[8] == 99) {
-	    response[8] = -1;
-	    response[9] = -1;
-	    response[10] = -1;
-	    response[11] = -1;
+	     response[8] = -1;
+	     response[9] = -1;
+	     response[10] = -1;
+	     response[11] = -1;
 	    }
-    Log.d(LOG_TAG, "AFTER respons0 = " + response[0] + " 1= " + response[1] + " 2= " + response[2] + " 3= " + response[3] + " 4= " + response[4] + " 5= " + response[5] + " 6= " + response[6] + " 7= " + response[7] + " 8= " + response[8] + " 9= " + response[9] + " 10= " + response[10] + " 11= " + response[11]);
+        Log.d(LOG_TAG, "AFTER respons0 = " + response[0] + " 1= " + response[1] + " 2= " + response[2] + " 3= " + response[3] + " 4= " + response[4] + " 5= " + response[5] + " 6= " + response[6] + " 7= " + response[7] + " 8= " + response[8] + " 9= " + response[9] + " 10= " + response[10] + " 11= " + response[11]);
 
         return response;
     }
