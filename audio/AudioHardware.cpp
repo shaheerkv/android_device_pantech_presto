@@ -17,7 +17,7 @@
 
 #include <math.h>
 
-#define LOG_NDEBUG 0
+//#define LOG_NDEBUG 0
 #define LOG_TAG "AudioHardwareMSM8660"
 #include <utils/Log.h>
 #include <utils/String8.h>
@@ -1856,7 +1856,7 @@ static status_t do_route_audio_rpc(uint32_t device,
     else if(device == SND_DEVICE_NR_FT) {
         new_rx_device = DEVICE_SND_DEVICE_NR_FT_RX;
         new_tx_device = DEVICE_SND_DEVICE_NR_FT_TX;
-        ALOGI("In SND_DEVICE_NR_CT");
+        ALOGI("In SND_DEVICE_NR_FT");
         if(DEV_ID(new_tx_device) == INVALID_DEVICE) {
             new_tx_device = DEVICE_SND_DEVICE_NR_ON_2MIC_TX;
             ALOGI("Falling back to HANDSET_CALL_RX AND HANDSET_CALL_TX as no DUALMIC_HANDSET_TX support found");
@@ -1868,7 +1868,7 @@ static status_t do_route_audio_rpc(uint32_t device,
     else if(device == SND_DEVICE_NR_OFF_FT) {
         new_rx_device = DEVICE_SND_DEVICE_NR_OFF_FT_RX;
         new_tx_device = DEVICE_SND_DEVICE_NR_OFF_FT_TX;
-        ALOGI("In SND_DEVICE_NR_OFF_CT");
+        ALOGI("In SND_DEVICE_NR_OFF_FT");
         if(DEV_ID(new_tx_device) == INVALID_DEVICE) {
             new_tx_device = DEVICE_SND_DEVICE_NR_ON_2MIC_TX;
             ALOGI("Falling back to HANDSET_CALL_RX AND HANDSET_CALL_TX as no DUALMIC_HANDSET_TX support found");
@@ -2636,38 +2636,31 @@ status_t AudioHardware::doRouting(AudioStreamInMSM8x60 *input)
     }
 
     if (dualmic_enabled) {
-
-
-
-
-#ifdef PRESTO_AUDIO
+#ifdef SAMSUNG_AUDIO
+        if (sndDevice == SND_DEVICE_HANDSET) {
+            ALOGI("Routing audio to Handset with DualMike enabled\n");
+            sndDevice = SND_DEVICE_IN_S_SADC_OUT_HANDSET;
+        }
+#elifdef PRESTO_AUDIO
         if (sndDevice == SND_DEVICE_HANDSET) {
             ALOGI("Routing audio to Handset with DualMike enabled\n");
             sndDevice = SND_DEVICE_NR_CT;
         }
 
-	if (sndDevice == SND_DEVICE_SPEAKER) {
+        if (sndDevice == SND_DEVICE_SPEAKER) {
             ALOGI("Routing audio to Handset with DualMike enabled\n");
             sndDevice = SND_DEVICE_NR_FT;
         }
-
+#else
+        if (sndDevice == SND_DEVICE_HANDSET) {
+            ALOGI("Routing audio to Handset with DualMike enabled\n");
+            sndDevice = SND_DEVICE_IN_S_SADC_OUT_HANDSET;
+        } else if (sndDevice == SND_DEVICE_SPEAKER) {
+            ALOGI("Routing audio to Speakerphone with DualMike enabled\n");
+            sndDevice = SND_DEVICE_IN_S_SADC_OUT_SPEAKER_PHONE;
+        }
 #endif
-//#ifdef SAMSUNG_AUDIO
-//        if (sndDevice == SND_DEVICE_HANDSET) {
-//            ALOGI("Routing audio to Handset with DualMike enabled\n");
-//            sndDevice = SND_DEVICE_IN_S_SADC_OUT_HANDSET;
-//        }
-//#else
-//        if (sndDevice == SND_DEVICE_HANDSET) {
-//            ALOGI("Routing audio to Handset with DualMike enabled\n");
-//            sndDevice = SND_DEVICE_IN_S_SADC_OUT_HANDSET;
-//        } else if (sndDevice == SND_DEVICE_SPEAKER) {
-//            ALOGI("Routing audio to Speakerphone with DualMike enabled\n");
-//            sndDevice = SND_DEVICE_IN_S_SADC_OUT_SPEAKER_PHONE;
-//        }
-//#endif
     }
-
 #ifdef SAMSUNG_AUDIO
     if (mMode == AudioSystem::MODE_IN_CALL) {
         if ((!dualmic_enabled) && (sndDevice == SND_DEVICE_HANDSET)) {
