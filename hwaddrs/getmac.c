@@ -48,7 +48,7 @@ int main() {
 	if (mac[0] == 0)
 		return 0;
 
-	fd = fopen("/data/misc/wifi/config","w");
+	fd = fopen("/data/misc/wifi/panmac","w");
 	fprintf(fd,"cur_etheraddr=%.2x:%.2x:%.2x:%.2x:%.2x:%.2x\n",
 			mac[0]&0xFF,
 			(mac[0]&0xFF00) >> 8,
