@@ -162,7 +162,6 @@ public:
     // create I/O streams
     virtual AudioStreamOut* openOutputStream(
                                 uint32_t devices,
-                                audio_output_flags_t flags,
                                 int *format=0,
                                 uint32_t *channels=0,
                                 uint32_t *sampleRate=0,
@@ -183,6 +182,7 @@ public:
 
 protected:
     virtual status_t    dump(int fd, const Vector<String16>& args);
+    status_t setupDeviceforVoipCall(bool value);
 
 private:
 
@@ -560,7 +560,9 @@ private:
             Mutex mLock;
 #ifdef QCOM_VOIP_ENABLED
             int mVoipFd;
-            int mNumVoipStreams;
+            bool mVoipInActive;
+            bool mVoipOutActive;
+            Mutex mVoipLock;
 #endif
 #ifdef HTC_ACOUSTIC_AUDIO
             int mNoiseSuppressionState;

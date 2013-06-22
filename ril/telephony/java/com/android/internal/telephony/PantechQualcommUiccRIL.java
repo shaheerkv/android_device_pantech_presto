@@ -1,3 +1,19 @@
+/*
+* Copyright (C) 2012 The CyanogenMod Project
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
 package com.android.internal.telephony;
 
 import static com.android.internal.telephony.RILConstants.*;
@@ -6,126 +22,92 @@ import android.content.Context;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.SystemProperties;
-import android.os.SystemClock;
-import android.os.AsyncResult;
+import android.telephony.SignalStrength;
 import android.text.TextUtils;
 import android.util.Log;
-import com.android.internal.telephony.RILConstants;
 
 import java.util.ArrayList;
 
 /**
- * Custom RIL to handle unique behavior of Presto radio
- *
- * {@hide}
- */
+* Custom Qualcomm No SimReady RIL for LGE using the latest Uicc stack
+*
+* {@hide}
+*/
 public class PantechQualcommUiccRIL extends QualcommSharedRIL implements CommandsInterface {
     boolean RILJ_LOGV = true;
     boolean RILJ_LOGD = true;
 
-    public static final int INVALID_SNR = 0x7fffffff;
-    private boolean mSignalbarCount = SystemProperties.getBoolean("ro.telephony.sends_barcount", false);
-    private Object mSMSLock = new Object();
-    private boolean mIsSendingSMS = false;
-    public static final long SEND_SMS_TIMEOUT_IN_MS = 30000;
-
     public PantechQualcommUiccRIL(Context context, int networkMode, int cdmaSubscription) {
         super(context, networkMode, cdmaSubscription);
-        mQANElements = 4;
     }
 
-    @Override
-    protected void
-    processUnsolicited (Parcel p) {
-        Object ret;
-        int dataPosition = p.dataPosition();   // save off position within the Parcel
-        int response     = p.readInt();
+    /*
+@Override
+public void
+setupDataCall(String radioTechnology, String profile, String apn,
+String user, String password, String authType, String protocol,
+Message result) {
 
-        switch(response) {
-            case RIL_UNSOL_NITZ_TIME_RECEIVED:
-                handleNitzTimeReceived(p);
-                return;
-            case 1038: ret = responseVoid(p); break; // RIL_UNSOL_DATA_NETWORK_STATE_CHANGED
+RILRequest rrSPT = RILRequest.obtain(
+121, null); //121 - RIL_REQUEST_VSS_SET_PDN_TABLE
+rrSPT.mp.writeInt(1); // pdnId
+rrSPT.mp.writeInt(apn.length()); // apnLength
+rrSPT.mp.writeString(apn); // apn
+rrSPT.mp.writeInt(0); // ipType
+rrSPT.mp.writeInt(0); // inactivityTime
+rrSPT.mp.writeInt(1); // enable
+send(rrSPT);
 
-            default:
-                // Rewind the Parcel
-                p.setDataPosition(dataPosition);
 
-                // Forward responses that we are not overriding to the super class
-                super.processUnsolicited(p);
-                return;
-        }
 
-        switch(response) {
-            case 1038: // RIL_UNSOL_DATA_NETWORK_STATE_CHANGED
-                if (RILJ_LOGD) unsljLog(response);
+RILRequest rr
+= RILRequest.obtain(RIL_REQUEST_SETUP_DATA_CALL, result);
 
-                // Notifying on voice state change since it just causes a
-                // GsmServiceStateTracker::pollState() like CAF RIL does.
-                mVoiceNetworkStateRegistrants
-                    .notifyRegistrants(new AsyncResult(null, null, null));
-            break;
-        }
-    }
+rr.mp.writeInt(7);
 
-    protected void
-    handleNitzTimeReceived(Parcel p) {
-        String nitz = (String)responseString(p);
-        if (RILJ_LOGD) unsljLogRet(RIL_UNSOL_NITZ_TIME_RECEIVED, nitz);
+rr.mp.writeString(radioTechnology);
+rr.mp.writeString(profile);
+rr.mp.writeString(apn);
+rr.mp.writeString(user);
+rr.mp.writeString(password);
+rr.mp.writeString(authType);
+rr.mp.writeString(protocol);
 
-        // has bonus long containing milliseconds since boot that the NITZ
-        // time was received
-        long nitzReceiveTime = p.readLong();
+if (RILJ_LOGD) riljLog(rr.serialString() + "> "
++ requestToString(rr.mRequest) + " " + radioTechnology + " "
++ profile + " " + apn + " " + user + " "
++ password + " " + authType + " " + protocol);
 
-        Object[] result = new Object[2];
-
-        String fixedNitz = nitz;
-        String[] nitzParts = nitz.split(",");
-        if (nitzParts.length == 4) {
-            // 0=date, 1=time+zone, 2=dst, 3=garbage that confuses GsmServiceStateTracker (so remove it)
-            fixedNitz = nitzParts[0]+","+nitzParts[1]+","+nitzParts[2]+",";
-        }
-
-        result[0] = fixedNitz;
-        result[1] = Long.valueOf(nitzReceiveTime);
-
-        if (mNITZTimeRegistrant != null) {
-
-            mNITZTimeRegistrant
-                .notifyRegistrant(new AsyncResult (null, result, null));
-        } else {
-            // in case NITZ time registrant isnt registered yet
-            mLastNITZTimeInfo = result;
-        }
-    }
-
-    @Override
-    public void
-    setNetworkSelectionModeManual(String operatorNumeric, Message response) {
-        RILRequest rr
-                = RILRequest.obtain(RIL_REQUEST_SET_NETWORK_SELECTION_MANUAL,
-                                    response);
-
-        if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest)
-                    + " " + operatorNumeric);
-
-        rr.mp.writeString(operatorNumeric);
-
-        send(rr);
-    }
+send(rr);
+}
+*/
 
     @Override
     protected Object
+    responseSetupDataCall(Parcel p) {
+        DataCallState dataCall;
+
+        boolean oldRil = needsOldRilFeature("datacall");
+
+        if (!oldRil)
+           return super.responseSetupDataCall(p);
+
+        p.readString();
+        return super.responseSetupDataCall(p);
+
+    }
+    @Override
+    protected Object
     responseIccCardStatus(Parcel p) {
-        IccCardApplication ca;
+        IccCardApplicationStatus ca;
 
         IccCardStatus status = new IccCardStatus();
         status.setCardState(p.readInt());
         status.setUniversalPinState(p.readInt());
-        status.setGsmUmtsSubscriptionAppIndex(p.readInt());
-        status.setCdmaSubscriptionAppIndex(p.readInt() );
+        status.mGsmUmtsSubscriptionAppIndex = p.readInt();
+        status.mCdmaSubscriptionAppIndex = p.readInt();
 
-        status.setImsSubscriptionAppIndex(p.readInt());
+        status.mImsSubscriptionAppIndex = p.readInt();
 
         int numApplications = p.readInt();
 
@@ -133,53 +115,44 @@ public class PantechQualcommUiccRIL extends QualcommSharedRIL implements Command
         if (numApplications > IccCardStatus.CARD_MAX_APPS) {
             numApplications = IccCardStatus.CARD_MAX_APPS;
         }
-        status.setNumApplications(numApplications);
+        status.mApplications = new IccCardApplicationStatus[numApplications];
 
-        for (int i = 0 ; i < numApplications ; i++) {
-            ca = new IccCardApplication();
-            ca.app_type       = ca.AppTypeFromRILInt(p.readInt());
-            ca.app_state      = ca.AppStateFromRILInt(p.readInt());
+
+        for (int i = 0; i < numApplications; i++) {
+            ca = new IccCardApplicationStatus();
+            ca.app_type = ca.AppTypeFromRILInt(p.readInt());
+            ca.app_state = ca.AppStateFromRILInt(p.readInt());
             ca.perso_substate = ca.PersoSubstateFromRILInt(p.readInt());
-            if ((ca.app_state == IccCardApplication.AppState.APPSTATE_SUBSCRIPTION_PERSO) &&
-                ((ca.perso_substate == IccCardApplication.PersoSubState.PERSOSUBSTATE_READY) ||
-                (ca.perso_substate == IccCardApplication.PersoSubState.PERSOSUBSTATE_UNKNOWN))) {
-                // ridiculous hack for network SIM unlock pin
-                ca.app_state = IccCardApplication.AppState.APPSTATE_UNKNOWN;
-                Log.d(LOG_TAG, "ca.app_state == AppState.APPSTATE_SUBSCRIPTION_PERSO");
-                Log.d(LOG_TAG, "ca.perso_substate == PersoSubState.PERSOSUBSTATE_READY");
-            }
-            ca.aid            = p.readString();
-            ca.app_label      = p.readString();
-            ca.pin1_replaced  = p.readInt();
-            ca.pin1           = ca.PinStateFromRILInt(p.readInt());
-            ca.pin2           = ca.PinStateFromRILInt(p.readInt());
-
-            p.readInt(); //remaining_count_pin1   - pin1_num_retries
-            p.readInt(); //remaining_count_puk1   - puk1_num_retries
-            p.readInt(); //remaining_count_pin2   - pin2_num_retries
-            p.readInt(); //remaining_count_puk2   - puk2_num_retries
-            p.readInt(); //                       - perso_unblock_retries
-            status.addApplication(ca);
+            ca.aid = p.readString();
+            ca.app_label = p.readString();
+            ca.pin1_replaced = p.readInt();
+            ca.pin1 = ca.PinStateFromRILInt(p.readInt());
+            ca.pin2 = ca.PinStateFromRILInt(p.readInt());
+            p.readInt(); //remaining_count_pin1
+            p.readInt(); //remaining_count_puk1
+            p.readInt(); //remaining_count_pin2
+            p.readInt(); //remaining_count_puk2
+            status.mApplications[i] = ca;
         }
         int appIndex = -1;
         if (mPhoneType == RILConstants.CDMA_PHONE) {
-            appIndex = status.getCdmaSubscriptionAppIndex();
+            appIndex = status.mCdmaSubscriptionAppIndex;
             Log.d(LOG_TAG, "This is a CDMA PHONE " + appIndex);
         } else {
-            appIndex = status.getGsmUmtsSubscriptionAppIndex();
+            appIndex = status.mGsmUmtsSubscriptionAppIndex;
             Log.d(LOG_TAG, "This is a GSM PHONE " + appIndex);
         }
 
         if (numApplications > 0) {
-            IccCardApplication application = status.getApplication(appIndex);
+            IccCardApplicationStatus application = status.mApplications[appIndex];
             mAid = application.aid;
             mUSIM = application.app_type
-                      == IccCardApplication.AppType.APPTYPE_USIM;
+                      == IccCardApplicationStatus.AppType.APPTYPE_USIM;
             mSetPreferredNetworkType = mPreferredNetworkType;
 
             if (TextUtils.isEmpty(mAid))
                mAid = "";
-            Log.d(LOG_TAG, "mAid " + mAid + " mUSIM=" + mUSIM + " mSetPreferredNetworkType=" + mSetPreferredNetworkType);
+            Log.d(LOG_TAG, "mAid " + mAid);
         }
 
         return status;
@@ -191,40 +164,24 @@ public class PantechQualcommUiccRIL extends QualcommSharedRIL implements Command
         int numInts = 12;
         int response[];
 
-        // This is a mashup of algorithms used in
-        // LGEQualcommUiccRIL.java and SamsungQualcommUiccRIL.java
+        boolean oldRil = needsOldRilFeature("signalstrength");
+        boolean noLte = false;
 
-        // Get raw data
+        /* TODO: Add SignalStrength class to match RIL_SignalStrength */
         response = new int[numInts];
         for (int i = 0 ; i < numInts ; i++) {
-            response[i] = p.readInt();
+            if ((oldRil || noLte) && i > 6 && i < 12) {
+                response[i] = -1;
+            } else {
+                response[i] = p.readInt();
+            }
+            if (i == 7 && response[i] == 99) {
+                response[i] = -1;
+                noLte = true;
+            }
         }
-        Log.d(LOG_TAG, "BEFORE respons0 = " + response[0] + " 1= " + response[1] + " 2= " + response[2] + " 3= " + response[3] + " 4= " + response[4] + " 5= " + response[5] + " 6= " + response[6] + " 7= " + response[7] + " 8= " + response[8] + " 9= " + response[9] + " 10= " + response[10] + " 11= " + response[11]);
-            // response[8] LTE not enabled? then 8-11 = -1 and after that gsm signal strength will be used
-	    // response from 0 to 13:
-	    //mGsmSignalStrength;
-	    //mGwlAntLevel;
-	    //mGsmBitErrorRate;
-	    //mCdmaDbm;
-	    //mCdmaEcio;
-	    //mEvdoDbm;
-	    //mEvdoEcio;
-	    //mEvdoSnr;
-	    //mLteSignalStrength;
-	    //mLteRsrp;
-	    //mLteRsrq;
-	    //mLteRssnr;
-	    //mLteCqi;
-	    //isGsm = true;
 
-	    if (response[8] == 99) {
-	     response[8] = -1;
-	     response[9] = -1;
-	     response[10] = -1;
-	     response[11] = -1;
-	    }
-        Log.d(LOG_TAG, "AFTER respons0 = " + response[0] + " 1= " + response[1] + " 2= " + response[2] + " 3= " + response[3] + " 4= " + response[4] + " 5= " + response[5] + " 6= " + response[6] + " 7= " + response[7] + " 8= " + response[8] + " 9= " + response[9] + " 10= " + response[10] + " 11= " + response[11]);
-
-        return response;
+        return new SignalStrength(response[0], response[1], response[2], response[3], response[4], response[5], response[6], response[7],response[8], response[9], response[10], response[11], true);
     }
+
 }

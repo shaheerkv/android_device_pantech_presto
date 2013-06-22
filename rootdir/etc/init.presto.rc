@@ -2,13 +2,7 @@
 # Add additional services here
 #
 
-on early-init
-
-    mkdir /storage/sdcard1 0000 system system
-    # for backwards compatibility
-    symlink /storage/sdcard1 /external_sd
-    symlink /sdcard1 /mnt/external_sd
-    export SECONDARY_STORAGE /storage/sdcard1
+#on early-init
 
 #   mkdir /storage/usbdisk 0755 system system
 #   # for backwards compatibility

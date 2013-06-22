@@ -31,9 +31,6 @@ PRODUCT_AAPT_PREF_CONFIG := hdpi
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
-# Radio fixes
-FRAMEWORKS_BASE_SUBDIRS += ../../$(LOCAL_PATH)/ril/
-
 #----------------------------------------------------------------------
 
 LOCAL_KERNEL := $(LOCAL_PATH)/prebuilt/kernel/kernel
@@ -47,6 +44,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/system/bin/BCM43291A0_003.001.013.0141.0194.hcd:system/bin/BCM43291A0_003.001.013.0141.0194.hcd
 
+# Bins
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/system/bin/mpdecision:system/bin/mpdecision
+    $(LOCAL_PATH)/prebuilt/system/bin/qrngd:system/bin/qrngd
+
 # IDC
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/system/usr/idc/pantech_earjack.idc:system/usr/idc/pantech_earjack.idc \
@@ -56,6 +58,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/system/usr/keylayout/tki_input.kl:system/usr/keylayout/tki_input.kl
 
+# Media configuration
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/media/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/media/media_codecs.xml:system/etc/media_codecs.xml
+
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
@@ -64,39 +71,32 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
 
-# uevent.rc
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/ueventd.presto.rc:root/ueventd.rc
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/init.pantech.usb.rc:root/init.pantech.usb.rc
-
-#CPU MGMNT ##binary from LG NITRO HD##
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/system/bin/mpdecision:system/bin/mpdecision
-
-
 # Wifi (bcmdhd)
 #WIFI_BAND := 802_11_ABG
 #$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
 
 #----------------------------------------------------------------------
 
+# Audio with Audience A2020
+PRODUCT_PACKAGES += audio.primary.presto
+
 # FM Radio
 PRODUCT_PACKAGES += FmRadioReceiver
+
 # Camera
-PRODUCT_PACKAGES += Camera
+PRODUCT_PACKAGES += camera.default 
+
 # Ramdisk
-PRODUCT_PACKAGES += init.presto.rc
+PRODUCT_PACKAGES += \
+    init.presto.rc \
+    init.presto.usb.rc
 
 # Sky_touch
 PRODUCT_PACKAGES += libsky_touch
 
-# audio with Audience A2020
-PRODUCT_PACKAGES += audio.primary.presto
-
 # wifi/bt mac helper
 PRODUCT_PACKAGES += hwaddrs
+
 #----------------------------------------------------------------------
 
 # inherit pantech/msm8660-common
