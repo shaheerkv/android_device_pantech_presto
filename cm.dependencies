@@ -10,5 +10,9 @@
     {
         "repository": "android_kernel_pantech_presto",
         "target_path": "kernel/pantech/presto"
+    },
+    {
+        "repository": "android_vendor_pantech_qcom-common",
+        "target_path": "vendor/pantech/qcom-common"
     }
 ]
