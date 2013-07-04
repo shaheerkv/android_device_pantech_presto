@@ -81,7 +81,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += audio.primary.presto
 
 # FM Radio
-PRODUCT_PACKAGES += FmRadioReceiver
+#PRODUCT_PACKAGES += FmRadioReceiver
 
 # Camera
 PRODUCT_PACKAGES += camera.default 
@@ -93,6 +93,9 @@ PRODUCT_PACKAGES += \
 
 # Sky_touch
 PRODUCT_PACKAGES += libsky_touch
+
+# Presto Settings
+PRODUCT_PACKAGES += PrestoParts
 
 # wifi/bt mac helper
 PRODUCT_PACKAGES += hwaddrs
