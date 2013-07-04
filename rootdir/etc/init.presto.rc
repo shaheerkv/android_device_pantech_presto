@@ -66,13 +66,13 @@ service skytestserver /system/bin/skytestserver
 # Sensor daemon
 service orientationd /system/bin/orientationd
     class core
-    user root compass system
-    group root input system
+    user compass system
+    group input system
 
 service geomagneticd /system/bin/geomagneticd
     class core
-    user root compass system
-    group root system input
+    user compass system
+    group system input
 
 # Write wifi and bt MACs to files
     on property:wifi.interface=wlan0
