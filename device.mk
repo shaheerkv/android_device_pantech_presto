@@ -100,6 +100,15 @@ PRODUCT_PACKAGES += audio.primary.presto
 
 # wifi/bt mac helper
 PRODUCT_PACKAGES += hwaddrs
+
+# Bluetooth
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/system/bin/init.qcom.bt.sh:system/bin/init.qcom.bt.sh
+
+PRODUCT_PACKAGES += \
+    hcitool \
+    hciconfig \
+
 #----------------------------------------------------------------------
 
 # inherit pantech/msm8660-common
