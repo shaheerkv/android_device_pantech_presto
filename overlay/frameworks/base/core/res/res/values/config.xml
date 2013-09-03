@@ -24,7 +24,7 @@
     <bool name="config_showNavigationBar">false</bool>
 
     <!-- Our amoled doesn't animate well. -->
-    <bool name="config_animateScreenLights">true</bool>
+    <bool name="config_animateScreenLights">false</bool>
 
     <!-- Component name of the default wallpaper. This will be ImageWallpaper if not
                   specified -->
@@ -110,5 +110,10 @@
 
     <!-- Is the notification LED intrusive? Used to decide if there should be a disable option -->
     <bool name="config_intrusiveNotificationLed">true</bool>
+       <!-- Boolean indicating if restoring network selection should be skipped -->
+
+    <!-- The restoring is handled by modem if it is true-->
+    <bool name="skip_restoring_network_selection">true</bool>
+
 
 </resources>
