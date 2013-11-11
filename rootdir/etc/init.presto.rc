@@ -57,6 +57,12 @@ service skytestserver /system/bin/skytestserver
     socket skytest stream 666
     user root
 
+# mpdecision
+service mpdecision /system/bin/mpdecision --no_sleep --avg_comp
+        class core
+        user root
+        disabled
+
 # Sensor daemon
 service orientationd /system/bin/orientationd
     class core
