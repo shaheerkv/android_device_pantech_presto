@@ -76,10 +76,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
 
-# Wifi (bcmdhd)
-#WIFI_BAND := 802_11_ABG
-#$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
-
 #----------------------------------------------------------------------
 
 # Audio with Audience A2020
@@ -109,3 +105,6 @@ PRODUCT_PACKAGES += hwaddrs
 
 # inherit pantech/msm8660-common
 $(call inherit-product-if-exists, device/pantech/msm8660-common/msm8660-common.mk)
+
+# Wifi
+$(call inherit-product, device/pantech/presto/wifi/device-bcm.mk)
