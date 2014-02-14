@@ -111,5 +111,4 @@ BOARD_VOLD_MAX_PARTITIONS := 28
 BOARD_SUPPRESS_EMMC_WIPE := true
 
 # Wifi
--include device/pantech/presto/wifi/bcm4329.mk
-
+-include device/pantech/presto/wifi/board-bcm.mk
