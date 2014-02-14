@@ -67,6 +67,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
+# Ramdisk
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/init.presto.usb.rc:root/init.presto.usb.rc
+
 # Recovery
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
@@ -88,8 +92,7 @@ PRODUCT_PACKAGES += camera.default
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    init.presto.rc \
-    init.presto.usb.rc
+    init.presto.rc
 
 # Sky_touch
 PRODUCT_PACKAGES += libsky_touch
