@@ -69,7 +69,8 @@ PRODUCT_COPY_FILES += \
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/init.presto.usb.rc:root/init.presto.usb.rc
+    $(LOCAL_PATH)/rootdir/etc/init.presto.usb.rc:root/init.presto.usb.rc \
+    $(LOCAL_PATH)/rootdir/etc/ueventd.presto.rc:root/ueventd.rc
 
 # Recovery
 PRODUCT_COPY_FILES += \
