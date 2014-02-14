@@ -93,7 +93,8 @@ PRODUCT_PACKAGES += camera.default
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    init.presto.rc
+    init.presto.rc \
+    init.qcom.baseband.sh
 
 # Sky_touch
 PRODUCT_PACKAGES += libsky_touch
