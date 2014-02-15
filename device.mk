@@ -120,6 +120,16 @@ PRODUCT_PACKAGES += \
 
 #----------------------------------------------------------------------
 
+# Device properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.bt.bdaddr_path=/data/misc/bd_addr \
+    ro.sf.lcd_density=240 \
+    lpa.decode=false \
+    telephony.lteOnGsmDevice=1 \
+    ro.telephony.ril_class=PantechQualcommUiccRIL
+
+#----------------------------------------------------------------------
+
 # inherit pantech/msm8660-common
 $(call inherit-product-if-exists, device/pantech/msm8660-common/msm8660.mk)
 
