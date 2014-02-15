@@ -75,5 +75,5 @@ service geomagneticd /system/bin/geomagneticd
     group system input
 
 # Write wifi and bt MACs to files
-    on property:wifi.interface=wlan0
+on property:wifi.interface=wlan0
     exec /system/bin/hwaddrs

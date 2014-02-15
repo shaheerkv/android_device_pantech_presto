@@ -41,8 +41,7 @@ PRODUCT_COPY_FILES += \
 #----------------------------------------------------------------------
 
 # Bluetooth firmware BCM
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/system/bin/BCM43291A0_003.001.013.0141.0194.hcd:system/bin/BCM43291A0_003.001.013.0141.0194.hcd
+PRODUCT_COPY_FILES += $(LOCAL_PATH)/prebuilt/system/bin/BCM43291A0_003.001.013.0141.0194.hcd:system/bin/BCM43291A0_003.001.013.0141.0194.hcd
 
 # Bins
 PRODUCT_COPY_FILES += \
@@ -55,17 +54,15 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/system/usr/idc/qt602240_ts_input.idc:system/usr/idc/qt602240_ts_input.idc
 
 # Keyboardy
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/prebuilt/system/usr/keylayout/tki_input.kl:system/usr/keylayout/tki_input.kl
+PRODUCT_COPY_FILES += $(LOCAL_PATH)/prebuilt/system/usr/keylayout/tki_input.kl:system/usr/keylayout/tki_input.kl
 
 # Media configuration
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/media/media_profiles.xml:system/etc/media_profiles.xml \
-    $(LOCAL_PATH)/media/media_codecs.xml:system/etc/media_codecs.xml
+    $(LOCAL_PATH)/media/media_codecs.xml:system/etc/media_codecs.xml \
+    $(LOCAL_PATH)/media/media_profiles.xml:system/etc/media_profiles.xml
 
 # Permissions
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
+PRODUCT_COPY_FILES += frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
@@ -73,19 +70,21 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/ueventd.presto.rc:root/ueventd.rc
 
 # Recovery
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
+PRODUCT_COPY_FILES += $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
 
 #----------------------------------------------------------------------
 
 # Audio
 PRODUCT_PACKAGES += audio.primary.msm8660
 
+# Camera
+#PRODUCT_PACKAGES += camera.default
+
 # FM Radio
 #PRODUCT_PACKAGES += FmRadioReceiver
 
-# Camera
-#PRODUCT_PACKAGES += camera.default
+# Presto Settings
+PRODUCT_PACKAGES += PrestoParts
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -94,9 +93,6 @@ PRODUCT_PACKAGES += \
 
 # Sky_touch
 PRODUCT_PACKAGES += libsky_touch
-
-# Presto Settings
-PRODUCT_PACKAGES += PrestoParts
 
 # Torch
 PRODUCT_PACKAGES += \
