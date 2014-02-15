@@ -78,8 +78,8 @@ PRODUCT_COPY_FILES += \
 
 #----------------------------------------------------------------------
 
-# Audio with Audience A2020
-PRODUCT_PACKAGES += audio.primary.presto
+# Audio
+PRODUCT_PACKAGES += audio.primary.msm8660
 
 # FM Radio
 #PRODUCT_PACKAGES += FmRadioReceiver
