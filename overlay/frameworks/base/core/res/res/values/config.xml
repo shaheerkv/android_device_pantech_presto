@@ -84,5 +84,8 @@
 
     <!-- If this is true, the screen will come on when you plug/unplug usb/power/whatever. -->
     <bool name="config_unplugTurnsOnScreen">true</bool>
+    
+    <!-- Disable lockscreen translucent decor by default -->
+    <bool name="config_enableLockScreenTranslucentDecor">true</bool>
 
 </resources>
