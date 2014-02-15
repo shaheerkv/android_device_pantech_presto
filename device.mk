@@ -85,7 +85,7 @@ PRODUCT_PACKAGES += audio.primary.msm8660
 #PRODUCT_PACKAGES += FmRadioReceiver
 
 # Camera
-PRODUCT_PACKAGES += camera.default 
+#PRODUCT_PACKAGES += camera.default
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -104,7 +104,7 @@ PRODUCT_PACKAGES += hwaddrs
 #----------------------------------------------------------------------
 
 # inherit pantech/msm8660-common
-$(call inherit-product-if-exists, device/pantech/msm8660-common/msm8660-common.mk)
+$(call inherit-product-if-exists, device/pantech/msm8660-common/msm8660.mk)
 
 # Wifi
 $(call inherit-product, device/pantech/presto/wifi/device-bcm.mk)
