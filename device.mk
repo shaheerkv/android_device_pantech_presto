@@ -103,6 +103,9 @@ PRODUCT_PACKAGES += \
     Apollo \
     Torch
 
+# USB
+PRODUCT_PACKAGES += com.android.future.usb.accessory
+
 # Wallpapers
 PRODUCT_PACKAGES += \
     Galaxy4 \
