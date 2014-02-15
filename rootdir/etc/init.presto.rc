@@ -74,6 +74,10 @@ service geomagneticd /system/bin/geomagneticd
     user compass system
     group system input
 
+# QCOM Baseband script
+on property:dev.bootcomplete=1
+    exec /system/bin/sh /system/etc/init.qcom.baseband.sh
+
 # Write wifi and bt MACs to files
 on property:wifi.interface=wlan0
     exec /system/bin/hwaddrs
