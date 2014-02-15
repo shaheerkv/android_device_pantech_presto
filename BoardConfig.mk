@@ -86,7 +86,7 @@ BOARD_KERNEL_CMDLINE            := console=ttyHSL0,115200,n8 androidboot.hardwar
 BOARD_KERNEL_PAGESIZE           := 2048
 BOARD_MKBOOTIMG_ARGS            := --ramdisk_offset 0x01400000
 TARGET_KERNEL_CONFIG            := cyanogenmod_presto_defconfig
-TARGET_KERNEL_CUSTOM_TOOLCHAIN  := arm-eabi-4.4.3
+#TARGET_KERNEL_CUSTOM_TOOLCHAIN  := arm-eabi-4.4.3
 TARGET_KERNEL_SOURCE            := kernel/pantech/msm8660-common
 TARGET_PREBUILT_KERNEL          := device/pantech/presto/prebuilt/kernel/kernel
 
