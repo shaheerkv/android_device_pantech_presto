@@ -101,6 +101,7 @@ BOARD_SDEXT_DEVICE              := /dev/block/mmcblk1p1
 # Target info
 TARGET_QCOM_AUDIO_VARIANT   := caf
 TARGET_QCOM_DISPLAY_VARIANT := caf
+TARGET_QCOM_MEDIA_VARIANT   := caf
 
 # USB
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
