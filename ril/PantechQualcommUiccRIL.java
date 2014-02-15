@@ -29,10 +29,10 @@ import android.util.Log;
 import java.util.ArrayList;
 
 /**
-* Custom Qualcomm No SimReady RIL for LGE using the latest Uicc stack
-*
-* {@hide}
-*/
+ * Custom Qualcomm No SimReady RIL for LGE using the latest Uicc stack
+ *
+ * {@hide}
+ */
 public class PantechQualcommUiccRIL extends QualcommSharedRIL implements CommandsInterface {
     boolean RILJ_LOGV = true;
     boolean RILJ_LOGD = true;
@@ -42,45 +42,45 @@ public class PantechQualcommUiccRIL extends QualcommSharedRIL implements Command
     }
 
     /*
-@Override
-public void
-setupDataCall(String radioTechnology, String profile, String apn,
-String user, String password, String authType, String protocol,
-Message result) {
+    @Override
+    public void
+    setupDataCall(String radioTechnology, String profile, String apn,
+            String user, String password, String authType, String protocol,
+            Message result) {
 
-RILRequest rrSPT = RILRequest.obtain(
-121, null); //121 - RIL_REQUEST_VSS_SET_PDN_TABLE
-rrSPT.mp.writeInt(1); // pdnId
-rrSPT.mp.writeInt(apn.length()); // apnLength
-rrSPT.mp.writeString(apn); // apn
-rrSPT.mp.writeInt(0); // ipType
-rrSPT.mp.writeInt(0); // inactivityTime
-rrSPT.mp.writeInt(1); // enable
-send(rrSPT);
+        RILRequest rrSPT = RILRequest.obtain(
+                121, null); //121 - RIL_REQUEST_VSS_SET_PDN_TABLE
+        rrSPT.mp.writeInt(1); // pdnId
+        rrSPT.mp.writeInt(apn.length()); // apnLength
+        rrSPT.mp.writeString(apn); // apn
+        rrSPT.mp.writeInt(0); // ipType
+        rrSPT.mp.writeInt(0); // inactivityTime
+        rrSPT.mp.writeInt(1); // enable
+        send(rrSPT);
 
 
 
-RILRequest rr
-= RILRequest.obtain(RIL_REQUEST_SETUP_DATA_CALL, result);
+        RILRequest rr
+                = RILRequest.obtain(RIL_REQUEST_SETUP_DATA_CALL, result);
 
-rr.mp.writeInt(7);
+        rr.mp.writeInt(7);
 
-rr.mp.writeString(radioTechnology);
-rr.mp.writeString(profile);
-rr.mp.writeString(apn);
-rr.mp.writeString(user);
-rr.mp.writeString(password);
-rr.mp.writeString(authType);
-rr.mp.writeString(protocol);
+        rr.mp.writeString(radioTechnology);
+        rr.mp.writeString(profile);
+        rr.mp.writeString(apn);
+        rr.mp.writeString(user);
+        rr.mp.writeString(password);
+        rr.mp.writeString(authType);
+        rr.mp.writeString(protocol);
 
-if (RILJ_LOGD) riljLog(rr.serialString() + "> "
-+ requestToString(rr.mRequest) + " " + radioTechnology + " "
-+ profile + " " + apn + " " + user + " "
-+ password + " " + authType + " " + protocol);
+        if (RILJ_LOGD) riljLog(rr.serialString() + "> "
+                + requestToString(rr.mRequest) + " " + radioTechnology + " "
+                + profile + " " + apn + " " + user + " "
+                + password + " " + authType + " " + protocol);
 
-send(rr);
-}
-*/
+        send(rr);
+    }
+    */
 
     @Override
     protected Object
@@ -99,15 +99,14 @@ send(rr);
     @Override
     protected Object
     responseIccCardStatus(Parcel p) {
-        IccCardApplicationStatus ca;
+        IccCardApplicationStatus appStatus;
 
-        IccCardStatus status = new IccCardStatus();
-        status.setCardState(p.readInt());
-        status.setUniversalPinState(p.readInt());
-        status.mGsmUmtsSubscriptionAppIndex = p.readInt();
-        status.mCdmaSubscriptionAppIndex = p.readInt();
-
-        status.mImsSubscriptionAppIndex = p.readInt();
+        IccCardStatus cardStatus = new IccCardStatus();
+        cardStatus.setCardState(p.readInt());
+        cardStatus.setUniversalPinState(p.readInt());
+        cardStatus.mGsmUmtsSubscriptionAppIndex = p.readInt();
+        cardStatus.mCdmaSubscriptionAppIndex = p.readInt();
+        cardStatus.mImsSubscriptionAppIndex = p.readInt();
 
         int numApplications = p.readInt();
 
@@ -115,49 +114,35 @@ send(rr);
         if (numApplications > IccCardStatus.CARD_MAX_APPS) {
             numApplications = IccCardStatus.CARD_MAX_APPS;
         }
-        status.mApplications = new IccCardApplicationStatus[numApplications];
+        cardStatus.mApplications = new IccCardApplicationStatus[numApplications];
 
-
-        for (int i = 0; i < numApplications; i++) {
-            ca = new IccCardApplicationStatus();
-            ca.app_type = ca.AppTypeFromRILInt(p.readInt());
-            ca.app_state = ca.AppStateFromRILInt(p.readInt());
-            ca.perso_substate = ca.PersoSubstateFromRILInt(p.readInt());
-            ca.aid = p.readString();
-            ca.app_label = p.readString();
-            ca.pin1_replaced = p.readInt();
-            ca.pin1 = ca.PinStateFromRILInt(p.readInt());
-            ca.pin2 = ca.PinStateFromRILInt(p.readInt());
-            p.readInt(); //remaining_count_pin1
-            p.readInt(); //remaining_count_puk1
-            p.readInt(); //remaining_count_pin2
-            p.readInt(); //remaining_count_puk2
-            status.mApplications[i] = ca;
+        for (int i = 0 ; i < numApplications ; i++) {
+            appStatus = new IccCardApplicationStatus();
+            appStatus.app_type       = appStatus.AppTypeFromRILInt(p.readInt());
+            appStatus.app_state      = appStatus.AppStateFromRILInt(p.readInt());
+            appStatus.perso_substate = appStatus.PersoSubstateFromRILInt(p.readInt());
+            if ((appStatus.app_state == IccCardApplicationStatus.AppState.APPSTATE_SUBSCRIPTION_PERSO) &&
+                ((appStatus.perso_substate == IccCardApplicationStatus.PersoSubState.PERSOSUBSTATE_READY) ||
+                 (appStatus.perso_substate == IccCardApplicationStatus.PersoSubState.PERSOSUBSTATE_UNKNOWN))) {
+                    // ridiculous hack for network SIM unlock pin
+                    appStatus.app_state = IccCardApplicationStatus.AppState.APPSTATE_UNKNOWN;
+                    Log.d(LOG_TAG, "ca.app_state == AppState.APPSTATE_SUBSCRIPTION_PERSO");
+                    Log.d(LOG_TAG, "ca.perso_substate == PersoSubState.PERSOSUBSTATE_READY");
+            }
+            appStatus.aid            = p.readString();
+            appStatus.app_label      = p.readString();
+            appStatus.pin1_replaced  = p.readInt();
+            appStatus.pin1           = appStatus.PinStateFromRILInt(p.readInt());
+            appStatus.pin2           = appStatus.PinStateFromRILInt(p.readInt());
+            p.readInt(); // remaining_count_pin1 - pin1_num_retries
+            p.readInt(); // remaining_count_puk1 - puk1_num_retries
+            p.readInt(); // remaining_count_pin2 - pin2_num_retries
+            p.readInt(); // remaining_count_puk2 - puk2_num_retries
+            p.readInt(); // - perso_unblock_retries
+            cardStatus.mApplications[i] = appStatus;
         }
-        int appIndex = -1;
-        if (mPhoneType == RILConstants.CDMA_PHONE) {
-            appIndex = status.mCdmaSubscriptionAppIndex;
-            Log.d(LOG_TAG, "This is a CDMA PHONE " + appIndex);
-        } else {
-            appIndex = status.mGsmUmtsSubscriptionAppIndex;
-            Log.d(LOG_TAG, "This is a GSM PHONE " + appIndex);
-        }
-
-        if (numApplications > 0) {
-            IccCardApplicationStatus application = status.mApplications[appIndex];
-            mAid = application.aid;
-            mUSIM = application.app_type
-                      == IccCardApplicationStatus.AppType.APPTYPE_USIM;
-            mSetPreferredNetworkType = mPreferredNetworkType;
-
-            if (TextUtils.isEmpty(mAid))
-               mAid = "";
-            Log.d(LOG_TAG, "mAid " + mAid);
-        }
-
-        return status;
+        return cardStatus;
     }
-
     @Override
     protected Object
     responseSignalStrength(Parcel p) {
@@ -175,12 +160,11 @@ send(rr);
             } else {
                 response[i] = p.readInt();
             }
-            if (i == 7 && response[i] == 99) {
+            if (i == 8 && response[i] == 99) {
                 response[i] = -1;
                 noLte = true;
             }
         }
-
         return new SignalStrength(response[0], response[1], response[2], response[3], response[4], response[5], response[6], response[7],response[8], response[9], response[10], response[11], true);
     }
 
