@@ -82,7 +82,7 @@ TARGET_QCOM_HDMI_OUT := false
 
 # Kernel
 BOARD_KERNEL_BASE               := 0x40200000
-BOARD_KERNEL_CMDLINE            := console=ttyHSL0,115200,n8 androidboot.hardware=qcom loglevel=0 androidboot.emmc=true androidboot.baseband=csfb
+BOARD_KERNEL_CMDLINE            := console=ttyHSL0,115200,n8 androidboot.hardware=qcom kgsl.mmutype=gpummu vmalloc=400M loglevel=0 androidboot.emmc=true androidboot.baseband=csfb
 BOARD_KERNEL_PAGESIZE           := 2048
 BOARD_MKBOOTIMG_ARGS            := --ramdisk_offset 0x01400000
 TARGET_KERNEL_CONFIG            := cyanogenmod_presto_defconfig
