@@ -31,6 +31,9 @@ PRODUCT_AAPT_PREF_CONFIG := hdpi
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
+# Recovery
+TARGET_RECOVERY_FSTAB = device/pantech/presto/fstab.qcom
+
 #----------------------------------------------------------------------
 
 LOCAL_KERNEL := $(LOCAL_PATH)/prebuilt/kernel/kernel
@@ -70,7 +73,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/ueventd.presto.rc:root/ueventd.rc
 
 # Recovery
-PRODUCT_COPY_FILES += $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
+#PRODUCT_COPY_FILES += $(LOCAL_PATH)/recovery.fstab:root/recovery.fstab
 
 #----------------------------------------------------------------------
 
