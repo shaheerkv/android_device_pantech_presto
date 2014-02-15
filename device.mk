@@ -98,6 +98,19 @@ PRODUCT_PACKAGES += libsky_touch
 # Presto Settings
 PRODUCT_PACKAGES += PrestoParts
 
+# Torch
+PRODUCT_PACKAGES += \
+    Apollo \
+    Torch
+
+# Wallpapers
+PRODUCT_PACKAGES += \
+    Galaxy4 \
+    HoloSpiralWallpaper \
+    MagicSmokeWallpapers \
+    NoiseField \
+    PhaseBeam
+
 # wifi/bt mac helper
 PRODUCT_PACKAGES += \
     hwaddrs \
