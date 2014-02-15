@@ -99,7 +99,9 @@ PRODUCT_PACKAGES += libsky_touch
 PRODUCT_PACKAGES += PrestoParts
 
 # wifi/bt mac helper
-PRODUCT_PACKAGES += hwaddrs
+PRODUCT_PACKAGES += \
+    hwaddrs \
+    liblog
 
 #----------------------------------------------------------------------
 
