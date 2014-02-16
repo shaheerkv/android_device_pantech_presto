@@ -1,4 +1,4 @@
-# Copyright (c) 2009-2012, The Linux Foundation. All rights reserved.
+# Copyright (c) 2009-2013, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -66,8 +66,6 @@ on boot
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chown bluetooth bluetooth /proc/bluetooth/sleep/proto
-    chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_lpm
-    chown bluetooth bluetooth /sys/module/hci_uart/parameters/ath_btwrite
     chown system system /sys/module/sco/parameters/disable_esco
     chown bluetooth bluetooth /sys/module/hci_smd/parameters/hcismd_set
     chmod 0660 /sys/module/bluetooth_power/parameters/power
@@ -75,8 +73,6 @@ on boot
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chmod 0660 /proc/bluetooth/sleep/proto
     chown bluetooth bluetooth /dev/ttyHS0
-    chmod 0660 /sys/module/hci_uart/parameters/ath_lpm
-    chmod 0660 /sys/module/hci_uart/parameters/ath_btwrite
     chmod 0660 /dev/ttyHS0
     chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
     chmod 0660 /sys/devices/platform/msm_serial_hs.0/clock
@@ -94,9 +90,6 @@ on boot
     mkdir /dev/socket/qmux_gps 0770 gps gps
     chmod 2770 /dev/socket/qmux_gps
 
-    # Allow QMUX daemon to assign port open wait time
-    chown radio radio /sys/devices/virtual/hsicctl/hsicctl0/modem_wait
-
     #setprop wifi.interface wlan0
 
     setprop ro.telephony.call_ring.multiple false
@@ -110,6 +103,14 @@ on boot
 
 
     chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
+
+    # Change permissions for fps_level nodes
+    chown system graphics /sys/class/graphics/fb0/msm_fb_fps_level
+    chown system graphics /sys/class/graphics/fb1/msm_fb_fps_level
+    chown system graphics /sys/class/graphics/fb2/msm_fb_fps_level
+    chmod 644 /sys/class/graphics/fb0/msm_fb_fps_level
+    chmod 400 /sys/class/graphics/fb1/msm_fb_fps_level
+    chmod 400 /sys/class/graphics/fb2/msm_fb_fps_level
 
     #For bridgemgr daemon to inform the USB driver of the correct transport
     chown radio radio /sys/class/android_usb/f_rmnet_smd_sdio/transport
@@ -144,6 +145,10 @@ on boot
     # an ack packet comes out of order
     write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
 
+# import cne init file
+on post-fs
+#   export LD_PRELOAD /system/lib/libNimsWrap.so
+
 # msm specific files that need to be created on /data
 on post-fs-data
     # we will remap this as /mnt/sdcard with the sdcard fuse tool
@@ -159,9 +164,12 @@ on post-fs-data
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
 
-    # Create the directory used by CnE subsystem
+    # Create the directories used by CnE subsystem
     mkdir /data/connectivity 0771 system system
     chown system system /data/connectivity
+
+    mkdir /data/connectivity/nsrm 0771 system system
+    chown system system /data/connectivity/nsrm
 
     # Create directory used by audio subsystem
     mkdir /data/misc/audio 0770 audio audio
@@ -184,10 +192,6 @@ on post-fs-data
     #Create the symlink to qcn wpa_supplicant folder for ar6000 wpa_supplicant
     mkdir /data/system 0775 system system
     #symlink /data/misc/wifi/wpa_supplicant /data/system/wpa_supplicant
-
-    #Create directories for wiper services
-    mkdir /data/wpstiles/ 0755 shell
-    mkdir /data/wiper 0755 gps qcom_oncrpc
 
     #Create directories for gpsone_daemon services
     mkdir /data/misc/gpsone_d 0770 system gps
@@ -215,13 +219,8 @@ on post-fs-data
     mkdir /data/time/ 0700 system system
 
     mkdir /data/audio/ 0770 media audio
-    # Enable the setgid bit on the directory
-    chmod 2770 /data/audio
 
     setprop vold.post_fs_data_done 1
-
-    #Create a folder for SRS to be able to create a usercfg file
-    mkdir /data/data/media 0770 media media
 
 # Export GPIO56 for fusion targets to enable/disable hub
 #service usbhub_init /system/bin/usbhub_init
@@ -244,8 +243,11 @@ on property:bluetooth.isEnabled=true
     start btwlancoex
     write /sys/class/bluetooth/hci0/idle_timeout 7000
 
-on property:ro.bluetooth.ftm_enabled=true
-    start ftmd
+on property:bluetooth.sap.status=running
+    start bt-sap
+
+on property:bluetooth.sap.status=stopped
+    stop bt-sap
 
 service qcom-c_core-sh /system/bin/sh /init.qcom.class_core.sh
     class core
@@ -253,11 +255,6 @@ service qcom-c_core-sh /system/bin/sh /init.qcom.class_core.sh
     oneshot
 
 service qcom-c_main-sh /system/bin/sh /init.qcom.class_main.sh
-    class main
-    user root
-    oneshot
-
-service ril-qmi /system/bin/sh /init.qcom.ril.sh
     class main
     user root
     oneshot
@@ -289,7 +286,7 @@ service config_bluetooth /system/bin/sh /system/etc/init.qcom.bt.sh "onboot"
     oneshot
 
 service dbus /system/bin/dbus-daemon --system --nofork
-    class main
+    class core
     socket dbus stream 660 bluetooth bluetooth
     user bluetooth
     group bluetooth net_bt_admin
@@ -310,7 +307,7 @@ service bluetoothd /system/bin/logwrapper /system/bin/bluetoothd -n
 service hciattach /system/bin/sh /system/etc/init.qcom.bt.sh
     class late_start
     user bluetooth
-    group bluetooth net_bt_admin
+    group qcom_oncrpc bluetooth net_bt_admin
     disabled
     oneshot
 
@@ -321,30 +318,23 @@ on property:bluetooth.hciattach=false
     setprop bluetooth.status off
 
 service hciattach_ath3k /system/bin/sh /system/etc/init.ath3k.bt.sh
+     class late_start
+     user bluetooth
+     group system bluetooth net_bt_admin misc
+     disabled
+     oneshot
+
+service bt-dun /system/bin/sh /system/etc/init.qcom.btdun.sh
     class late_start
     user bluetooth
-    group system bluetooth net_bt_admin misc
+    group bluetooth net_bt_admin inet
     disabled
     oneshot
 
-#service bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
-#   class late_start
-#   user bluetooth
-#   group bluetooth net_bt_admin inet
-#   disabled
-#   oneshot
-
-#service bt-sap /system/bin/sapd 15
-#   user bluetooth
-#   group bluetooth net_bt_admin
-#   class late_start
-#   disabled
-#   oneshot
-
-service ftmd /system/bin/logwrapper /system/bin/ftmdaemon
+service bt-sap /system/bin/sapd 15
+    user bluetooth
+    group bluetooth net_bt_admin
     class late_start
-    user root
-    group bluetooth net_bt_admin misc net_bt_stack qcom_diag
     disabled
     oneshot
 
@@ -396,24 +386,6 @@ on property:ro.data.large_tcp_window_size=true
 #    class late_start
 #    user bluetooth
 #    group bluetooth net_bt_admin inet net_admin net_raw
-#    disabled
-#    oneshot
-
-#service amp_init /system/bin/amploader -i
-#    class late_start
-#    user root
-#    disabled
-#    oneshot
-
-#service amp_load /system/bin/amploader -l 7000
-#    class late_start
-#    user root
-#    disabled
-#    oneshot
-
-#service amp_unload /system/bin/amploader -u
-#    class late_start
-#    user root
 #    disabled
 #    oneshot
 
@@ -469,6 +441,16 @@ service iprenew_p2p /system/bin/dhcpcd -n
     disabled
     oneshot
 
+service dhcpcd_bt-pan /system/bin/dhcpcd -BKLG
+    class late_start
+    disabled
+    oneshot
+
+service iprenew_bt-pan /system/bin/dhcpcd -n
+    class late_start
+    disabled
+    oneshot
+
 service dhcpcd_bnep0 /system/bin/dhcpcd -BKLG
     disabled
     oneshot
@@ -487,12 +469,6 @@ service dhcpcd_bnep3 /system/bin/dhcpcd -BKLG
 
 service dhcpcd_bnep4 /system/bin/dhcpcd -BKLG
     disabled
-    oneshot
-
-service wiperiface /system/bin/wiperiface
-    class late_start
-    user gps
-    group gps qcom_oncrpc net_raw
     oneshot
 
 service gpsone_daemon /system/bin/gpsone_daemon
@@ -540,7 +516,7 @@ service lowi-server /system/bin/lowi-server
 service fm_dl /system/bin/sh /system/etc/init.qcom.fm.sh
     class late_start
     user root
-    group system fm_radio
+    group system qcom_oncrpc
     disabled
     oneshot
 
@@ -699,35 +675,34 @@ service ssr_diag /system/bin/ssr_diag
     user system
     group system
 
-# Disable SSR to SoC restart
+#Disable boot timeout for external modems.
+on property:persist.sys.mdm.timeout_disable=1
+    write /sys/module/mdm_common/parameters/disable_boot_timeout 1
+# Limit to SoC reset (1) and independent SSR (3)
 on property:persist.sys.ssr.restart_level=1
     write /sys/module/subsystem_restart/parameters/restart_level 1
-#   write /sys/module/wcnss_ssr_8960/parameters/enable_riva_ssr 0
-    write /sys/bus/msm_subsys/devices/subsys0/restart_level system
-    write /sys/bus/msm_subsys/devices/subsys1/restart_level system
-    write /sys/bus/msm_subsys/devices/subsys2/restart_level system
-    write /sys/bus/msm_subsys/devices/subsys3/restart_level system
-
-# Enable SSR
 on property:persist.sys.ssr.restart_level=3
     write /sys/module/subsystem_restart/parameters/restart_level 3
-#   write /sys/module/wcnss_ssr_8960/parameters/enable_riva_ssr 1
-    write /sys/bus/msm_subsys/devices/subsys0/restart_level related
-    write /sys/bus/msm_subsys/devices/subsys1/restart_level related
-    write /sys/bus/msm_subsys/devices/subsys2/restart_level related
-    write /sys/bus/msm_subsys/devices/subsys3/restart_level related
 
-# Define fastmmi
-service fastmmi /system/bin/mmi
-    user root
-    group root
+on property:persist.radio.sglte_sim_active=true
+    kill qmiproxy 15
+on property:persist.radio.sglte_sim_active=false
+    kill qmiproxy 15
+on property:persist.radio.sglte_csfb=true
+    kill qmiproxy 15
+on property:persist.radio.sglte_csfb=false
+    kill qmiproxy 15
+
+service diag_mdlog_start /system/bin/diag_mdlog
+    class late_start
+    user sdcard_rw
+    group system qcom_diag sdcard_rw sdcard_r media_rw
     disabled
     oneshot
 
-service fastmmisrv /system/bin/sh /init.qcom.factory.sh
-    user root
+service diag_mdlog_stop /system/bin/diag_mdlog -k
+    class late_start
+    user sdcard_rw
+    group system qcom_diag sdcard_rw sdcard_r media_rw
     disabled
     oneshot
-
-on ffbm
-    start fastmmisrv
