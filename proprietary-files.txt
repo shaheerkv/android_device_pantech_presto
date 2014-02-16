@@ -25,6 +25,7 @@ bin/time_daemon
 bin/v4l2-qcamera-app
 
 # Camera
+lib/hw/camera.msm8660.so
 lib/libCommandSvc.so
 lib/libconfigdb.so
 lib/libdrmdiag.so
