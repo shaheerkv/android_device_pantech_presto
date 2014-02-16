@@ -19,6 +19,7 @@ bin/port-bridge
 bin/qseecomd
 bin/radish
 bin/rild
+bin/sapd
 bin/skytestserver
 bin/time_daemon
 bin/v4l2-qcamera-app
