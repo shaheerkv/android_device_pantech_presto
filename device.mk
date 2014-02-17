@@ -136,3 +136,6 @@ $(call inherit-product-if-exists, device/pantech/msm8660-common/msm8660.mk)
 
 # Wifi
 $(call inherit-product, device/pantech/presto/wifi/device-bcm.mk)
+
+#  Also get non-open-source vendor/pantech/qcom-common
+$(call inherit-product-if-exists, vendor/pantech/qcom-common/qcom-common-vendor.mk)
