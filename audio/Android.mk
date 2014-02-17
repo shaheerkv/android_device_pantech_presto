@@ -38,7 +38,6 @@ endif
 ifeq ($(BOARD_HAVE_PRESTO_AUDIO),true)
 LOCAL_CFLAGS += -DPRESTO_AUDIO
 endif
-endif
 
 ifeq ($(BOARD_HAVE_BACK_MIC_CAMCORDER),true)
   common_cflags += -DBACK_MIC_CAMCORDER
@@ -98,6 +97,4 @@ LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 LOCAL_CFLAGS += $(common_cflags)
 
-
 include $(BUILD_SHARED_LIBRARY)
-
