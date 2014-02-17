@@ -84,7 +84,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += audio.primary.msm8660
 
 # Camera
-#PRODUCT_PACKAGES += camera.default
+#PRODUCT_PACKAGES += camera.presto
 
 # FM Radio
 #PRODUCT_PACKAGES += FmRadioReceiver
