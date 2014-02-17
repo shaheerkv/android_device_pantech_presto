@@ -127,8 +127,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.bt.bdaddr_path=/data/misc/bd_addr \
     ro.sf.lcd_density=240 \
-    telephony.lteOnGsmDevice=1 \
-    ro.telephony.ril_class=PantechQualcommUiccRIL
+    telephony.lteOnGsmDevice=1
 
 #----------------------------------------------------------------------
 

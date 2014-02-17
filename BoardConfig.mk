@@ -91,7 +91,7 @@ TARGET_KERNEL_SOURCE            := kernel/pantech/msm8660-common
 TARGET_PREBUILT_KERNEL          := device/pantech/presto/prebuilt/kernel/kernel
 
 # Radio fixes
-BOARD_RIL_CLASS := ../../../device/pantech/presto/ril/
+#BOARD_RIL_CLASS := ../../../device/pantech/presto/ril/
 
 # SD Card info
 BOARD_SDCARD_DEVICE_PRIMARY     := /dev/block/mmcblk1p1
