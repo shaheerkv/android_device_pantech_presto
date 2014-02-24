@@ -132,7 +132,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 #----------------------------------------------------------------------
 
 # inherit pantech/msm8660-common
-$(call inherit-product-if-exists, device/pantech/msm8660-common/msm8660.mk)
+$(call inherit-product-if-exists, device/pantech/msm8660-common/msm8660-common.mk)
 
 # Wifi
 $(call inherit-product, device/pantech/presto/wifi/device-bcm.mk)
