@@ -24968,3 +24968,38 @@ index 0000000..9fc1254
 -- 
 1.9.1
 
+
+From 9c55dc153a0c2e6c731b65484ef0e8ce331d0556 Mon Sep 17 00:00:00 2001
+From: Emerson Pinter <dev@pinter.com.br>
+Date: Wed, 11 Jul 2012 08:39:36 -0300
+Subject: [PATCH] hardware-broadcom: Fix makefile
+
+The external/wpa_supplicant don't exists anymore, use
+external/wpa_supplicant_6 instead.
+
+Change-Id: Ie02974eeca42d701e32a6c8ff10618ff3e945a20
+---
+ bcm4329/config/Android.mk | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/bcm4329/config/Android.mk b/bcm4329/config/Android.mk
+index a021be9..6f96d82 100644
+--- a/bcm4329/config/Android.mk
++++ b/bcm4329/config/Android.mk
+@@ -28,10 +28,10 @@ include $(BUILD_PREBUILT)
+ #########################
+ 
+ WIFI_DRIVER_SOCKET_IFACE := wlan0
+-ifeq ($(strip $(WPA_SUPPLICANT_VERSION)),VER_0_6_X)
+-  include external/wpa_supplicant_6/wpa_supplicant/wpa_supplicant_conf.mk
++ifeq ($(strip $(WPA_SUPPLICANT_VERSION)),VER_0_8_X)
++  include external/wpa_supplicant_8/wpa_supplicant/wpa_supplicant_conf.mk
+ else
+-  include external/wpa_supplicant/wpa_supplicant_conf.mk
++  include external/wpa_supplicant_6/wpa_supplicant/wpa_supplicant_conf.mk
+ endif
+ 
+ #######################
+-- 
+1.9.1
+
