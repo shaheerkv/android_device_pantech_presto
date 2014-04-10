@@ -1,6 +1,8 @@
---- /hardware/libhardware_legacy/wifi/Android.mk
-+++ /hardware/libhardware_legacy/wifi/Android.mk
-@@ -43,7 +43,15 @@ ifdef WIFI_EXT_MODULE_NAME
+diff --git a/wifi/Android.mk b/wifi/Android.mk
+index c7bdc59..499ced8 100644
+--- a/wifi/Android.mk
++++ b/wifi/Android.mk
+@@ -40,7 +40,15 @@ ifdef WIFI_EXT_MODULE_NAME
  LOCAL_CFLAGS += -DWIFI_EXT_MODULE_NAME=\"$(WIFI_EXT_MODULE_NAME)\"
  endif
  
