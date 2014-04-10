@@ -1,0 +1,129 @@
+diff --git a/hostapd/Android.mk b/hostapd/Android.mk
+index 0773357..f27c29b 100644
+--- a/hostapd/Android.mk
++++ b/hostapd/Android.mk
+@@ -28,6 +28,14 @@ ifeq ($(BOARD_WLAN_DEVICE), bcmdhd)
+ L_CFLAGS += -DANDROID_P2P
+ endif
+ 
++ifeq ($(BOARD_WLAN_DEVICE), bcm4329)
++L_CFLAGS += -DANDROID_P2P
++endif
++
++ifeq ($(BOARD_WLAN_USE_WEXT_DRIVER),true)
++LOCAL_CFLAGS += -DWLAN_USE_WEXT_DRIVER
++endif
++
+ ifeq ($(BOARD_LEGACY_NL80211_STA_EVENTS),true)
+ L_CFLAGS += -DLEGACY_STA_EVENTS
+ endif
+diff --git a/hostapd/defconfig b/hostapd/defconfig
+index 2dd6fc8..9b80d19 100644
+--- a/hostapd/defconfig
++++ b/hostapd/defconfig
+@@ -20,7 +20,9 @@ CONFIG_DRIVER_HOSTAP=y
+ #CFLAGS += -I../../madwifi # change to the madwifi source directory
+ 
+ # Driver interface for drivers using the nl80211 kernel interface
++ifndef WLAN_USE_WEXT_DRIVER
+ CONFIG_DRIVER_NL80211=y
++endif
+ 
+ # Driver interface for FreeBSD net80211 layer (e.g., Atheros driver)
+ #CONFIG_DRIVER_BSD=y
+diff --git a/src/drivers/android_drv.h b/src/drivers/android_drv.h
+index 5906527..6df7160 100644
+--- a/src/drivers/android_drv.h
++++ b/src/drivers/android_drv.h
+@@ -14,6 +14,8 @@
+ 
+ #define WPA_EVENT_DRIVER_STATE "CTRL-EVENT-DRIVER-STATE "
+ 
++#define WEXT_CSCAN_AMOUNT		9
++
+ #define MAX_SSID_LEN 32
+ 
+ #define MAX_DRV_CMD_SIZE		248
+diff --git a/src/drivers/driver_wext.c b/src/drivers/driver_wext.c
+index e095bd4..ef18f8b 100644
+--- a/src/drivers/driver_wext.c
++++ b/src/drivers/driver_wext.c
+@@ -43,6 +43,8 @@ static int wpa_driver_wext_set_auth_alg(void *priv, int auth_alg);
+ #ifdef ANDROID
+ extern int wpa_driver_wext_driver_cmd(void *priv, char *cmd, char *buf,
+                                        size_t buf_len);
++extern int wpa_driver_wext_combo_scan(void *priv,
++					struct wpa_driver_scan_params *params);
+ extern int wpa_driver_signal_poll(void *priv, struct wpa_signal_info *si);
+ #endif
+ 
+@@ -1029,6 +1031,13 @@ int wpa_driver_wext_scan(void *priv, struct wpa_driver_scan_params *params)
+ 	const u8 *ssid = params->ssids[0].ssid;
+ 	size_t ssid_len = params->ssids[0].ssid_len;
+ 
++#ifdef ANDROID
++	if (drv->capa.max_scan_ssids > 1) {
++		ret = wpa_driver_wext_combo_scan(priv, params);
++		goto scan_out;
++	}
++#endif
++
+ 	if (ssid_len > IW_ESSID_MAX_SIZE) {
+ 		wpa_printf(MSG_DEBUG, "%s: too long SSID (%lu)",
+ 			   __FUNCTION__, (unsigned long) ssid_len);
+@@ -1054,6 +1063,9 @@ int wpa_driver_wext_scan(void *priv, struct wpa_driver_scan_params *params)
+ 		ret = -1;
+ 	}
+ 
++#ifdef ANDROID
++scan_out:
++#endif
+ 	/* Not all drivers generate "scan completed" wireless event, so try to
+ 	 * read results after a timeout. */
+ 	timeout = 10;
+@@ -1588,7 +1600,11 @@ static int wpa_driver_wext_get_range(void *priv)
+ 		drv->capa.auth = WPA_DRIVER_AUTH_OPEN |
+ 			WPA_DRIVER_AUTH_SHARED |
+ 			WPA_DRIVER_AUTH_LEAP;
++#ifdef ANDROID
++		drv->capa.max_scan_ssids = WEXT_CSCAN_AMOUNT;
++#else
+ 		drv->capa.max_scan_ssids = 1;
++#endif
+ 
+ 		wpa_printf(MSG_DEBUG, "  capabilities: key_mgmt 0x%x enc 0x%x "
+ 			   "flags 0x%x",
+diff --git a/wpa_supplicant/Android.mk b/wpa_supplicant/Android.mk
+index ea81ab2..deeb290 100644
+--- a/wpa_supplicant/Android.mk
++++ b/wpa_supplicant/Android.mk
+@@ -34,6 +34,15 @@ L_CFLAGS += -DANDROID_P2P
+ L_CFLAGS += -DP2P_CONCURRENT_SEARCH_DELAY=0
+ endif
+ 
++ifeq ($(BOARD_WLAN_DEVICE), bcm4329)
++L_CFLAGS += -DANDROID_P2P
++L_CFLAGS += -DP2P_CONCURRENT_SEARCH_DELAY=0
++endif
++
++ifeq ($(BOARD_WLAN_USE_WEXT_DRIVER),true)
++LOCAL_CFLAGS += -DWLAN_USE_WEXT_DRIVER
++endif
++
+ ifeq ($(BOARD_NO_APSME_ATTR),true)
+ L_CFLAGS += -DNO_APSME_ATTR
+ endif
+diff --git a/wpa_supplicant/defconfig b/wpa_supplicant/defconfig
+index aa6005f..68f6cf2 100644
+--- a/wpa_supplicant/defconfig
++++ b/wpa_supplicant/defconfig
+@@ -86,7 +86,9 @@ CONFIG_DRIVER_ATMEL=y
+ CONFIG_DRIVER_WEXT=y
+ 
+ # Driver interface for Linux drivers using the nl80211 kernel interface
++ifndef WLAN_USE_WEXT_DRIVER
+ CONFIG_DRIVER_NL80211=y
++endif
+ 
+ # Driver interface for FreeBSD net80211 layer (e.g., Atheros driver)
+ #CONFIG_DRIVER_BSD=y
