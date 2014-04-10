@@ -7,6 +7,7 @@ BOARD_HOSTAPD_DRIVER                := WEXT
 BOARD_HOSTAPD_PRIVATE_LIB           := lib_driver_cmd_wext
 BOARD_WLAN_DEVICE                   := bcm4329
 #BOARD_WLAN_DEVICE_REV              := bcm4329
+BOARD_WLAN_USE_WEXT_DRIVER          := true
 WIFI_BAND                           := 802_11_ABG
 
 WIFI_DRIVER_MODULE_PATH             := "/system/lib/modules/wlan.ko"
