@@ -103,6 +103,8 @@ lib/libril.so
 lib/libtime_genoff.so
 lib/libtime_remote_atom.so
 lib/libreference-ril.so
+lib/liboem_rapi_fusion.so
+lib/liboem_rapi.so
 
 # Sensors
 bin/geomagneticd
@@ -115,6 +117,11 @@ lib/libfotactl.so
 lib/libsky_aprlib.so
 lib/libsky_rawdata.so
 lib/libskytestclient.so
+lib/libsky_rftest.so
+
+#libs from cm-10.0 needed to start skytestserver
+lib/libbluedroid.so
+lib/libbluetooth.so
 
 # Thermald
 bin/thermald
