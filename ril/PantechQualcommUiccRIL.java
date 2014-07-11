@@ -24,9 +24,13 @@ import android.os.Parcel;
 import android.os.SystemProperties;
 import android.telephony.SignalStrength;
 import android.text.TextUtils;
-import android.util.Log;
+import android.telephony.Rlog;
 
 import java.util.ArrayList;
+
+import com.android.internal.telephony.uicc.IccCardApplicationStatus;
+import com.android.internal.telephony.uicc.IccCardStatus;
+import com.android.internal.telephony.dataconnection.DataCallResponse;
 
 /**
  * Custom Qualcomm No SimReady RIL for LGE using the latest Uicc stack
@@ -85,7 +89,7 @@ public class PantechQualcommUiccRIL extends QualcommSharedRIL implements Command
     @Override
     protected Object
     responseSetupDataCall(Parcel p) {
-        DataCallState dataCall;
+        DataCallResponse dataCall;
 
         boolean oldRil = needsOldRilFeature("datacall");
 
@@ -99,14 +103,15 @@ public class PantechQualcommUiccRIL extends QualcommSharedRIL implements Command
     @Override
     protected Object
     responseIccCardStatus(Parcel p) {
-        IccCardApplicationStatus appStatus;
+        IccCardApplicationStatus ca;
 
-        IccCardStatus cardStatus = new IccCardStatus();
-        cardStatus.setCardState(p.readInt());
-        cardStatus.setUniversalPinState(p.readInt());
-        cardStatus.mGsmUmtsSubscriptionAppIndex = p.readInt();
-        cardStatus.mCdmaSubscriptionAppIndex = p.readInt();
-        cardStatus.mImsSubscriptionAppIndex = p.readInt();
+        IccCardStatus status = new IccCardStatus();
+        status.setCardState(p.readInt());
+        status.setUniversalPinState(p.readInt());
+        status.mGsmUmtsSubscriptionAppIndex = p.readInt();
+        status.mCdmaSubscriptionAppIndex = p.readInt();
+
+        status.mImsSubscriptionAppIndex = p.readInt();
 
         int numApplications = p.readInt();
 
@@ -114,35 +119,49 @@ public class PantechQualcommUiccRIL extends QualcommSharedRIL implements Command
         if (numApplications > IccCardStatus.CARD_MAX_APPS) {
             numApplications = IccCardStatus.CARD_MAX_APPS;
         }
-        cardStatus.mApplications = new IccCardApplicationStatus[numApplications];
+        status.mApplications = new IccCardApplicationStatus[numApplications];
 
-        for (int i = 0 ; i < numApplications ; i++) {
-            appStatus = new IccCardApplicationStatus();
-            appStatus.app_type       = appStatus.AppTypeFromRILInt(p.readInt());
-            appStatus.app_state      = appStatus.AppStateFromRILInt(p.readInt());
-            appStatus.perso_substate = appStatus.PersoSubstateFromRILInt(p.readInt());
-            if ((appStatus.app_state == IccCardApplicationStatus.AppState.APPSTATE_SUBSCRIPTION_PERSO) &&
-                ((appStatus.perso_substate == IccCardApplicationStatus.PersoSubState.PERSOSUBSTATE_READY) ||
-                 (appStatus.perso_substate == IccCardApplicationStatus.PersoSubState.PERSOSUBSTATE_UNKNOWN))) {
-                    // ridiculous hack for network SIM unlock pin
-                    appStatus.app_state = IccCardApplicationStatus.AppState.APPSTATE_UNKNOWN;
-                    Log.d(LOG_TAG, "ca.app_state == AppState.APPSTATE_SUBSCRIPTION_PERSO");
-                    Log.d(LOG_TAG, "ca.perso_substate == PersoSubState.PERSOSUBSTATE_READY");
-            }
-            appStatus.aid            = p.readString();
-            appStatus.app_label      = p.readString();
-            appStatus.pin1_replaced  = p.readInt();
-            appStatus.pin1           = appStatus.PinStateFromRILInt(p.readInt());
-            appStatus.pin2           = appStatus.PinStateFromRILInt(p.readInt());
-            p.readInt(); // remaining_count_pin1 - pin1_num_retries
-            p.readInt(); // remaining_count_puk1 - puk1_num_retries
-            p.readInt(); // remaining_count_pin2 - pin2_num_retries
-            p.readInt(); // remaining_count_puk2 - puk2_num_retries
-            p.readInt(); // - perso_unblock_retries
-            cardStatus.mApplications[i] = appStatus;
+
+        for (int i = 0; i < numApplications; i++) {
+            ca = new IccCardApplicationStatus();
+            ca.app_type = ca.AppTypeFromRILInt(p.readInt());
+            ca.app_state = ca.AppStateFromRILInt(p.readInt());
+            ca.perso_substate = ca.PersoSubstateFromRILInt(p.readInt());
+            ca.aid = p.readString();
+            ca.app_label = p.readString();
+            ca.pin1_replaced = p.readInt();
+            ca.pin1 = ca.PinStateFromRILInt(p.readInt());
+            ca.pin2 = ca.PinStateFromRILInt(p.readInt());
+            p.readInt(); //remaining_count_pin1
+            p.readInt(); //remaining_count_puk1
+            p.readInt(); //remaining_count_pin2
+            p.readInt(); //remaining_count_puk2
+            status.mApplications[i] = ca;
         }
-        return cardStatus;
+        int appIndex = -1;
+        if (mPhoneType == RILConstants.CDMA_PHONE) {
+            appIndex = status.mCdmaSubscriptionAppIndex;
+            Rlog.d(RILJ_LOG_TAG, "This is a CDMA PHONE " + appIndex);
+        } else {
+            appIndex = status.mGsmUmtsSubscriptionAppIndex;
+            Rlog.d(RILJ_LOG_TAG, "This is a GSM PHONE " + appIndex);
+        }
+
+        if (numApplications > 0) {
+            IccCardApplicationStatus application = status.mApplications[appIndex];
+            mAid = application.aid;
+            mUSIM = application.app_type
+                      == IccCardApplicationStatus.AppType.APPTYPE_USIM;
+            mSetPreferredNetworkType = mPreferredNetworkType;
+
+            if (TextUtils.isEmpty(mAid))
+               mAid = "";
+            Rlog.d(RILJ_LOG_TAG, "mAid " + mAid);
+        }
+
+        return status;
     }
+
     @Override
     protected Object
     responseSignalStrength(Parcel p) {
@@ -163,8 +182,9 @@ public class PantechQualcommUiccRIL extends QualcommSharedRIL implements Command
             if (i == 8 && response[i] == 99) {
                 response[i] = -1;
                 noLte = true;
-            }
+	       }
         }
+
         return new SignalStrength(response[0], response[1], response[2], response[3], response[4], response[5], response[6], response[7],response[8], response[9], response[10], response[11], true);
     }
 
