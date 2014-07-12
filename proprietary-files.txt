@@ -7,7 +7,6 @@ lib/libaudioparsers.so
 lib/lib_iec_60958_61937.so
 
 # Bins
-bin/ATFWD-daemon
 bin/battery_charging
 bin/bridgemgrd
 bin/btnvtool
