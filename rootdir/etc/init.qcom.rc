@@ -38,20 +38,26 @@ on init
     mkdir /storage 0550 system sdcard_r
     mkdir /storage/emulated 0555 root root
     mkdir /storage/emulated/legacy 0555 root root
-    mkdir /storage/sdcard1 0000 system system
-#   mkdir /storage/usbdisk 0000 system system
+    mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
+    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+ #  mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
+ 
+     mkdir /storage/sdcard0 0700 root root
+     mkdir /storage/sdcard1 0700 root root
+    #   mkdir /storage/usbdisk 0000 system system
 
     # External storage directories
-    export EXTERNAL_STORAGE /storage/emulated/legacy
+    export EXTERNAL_STORAGE /storage/sdcard0
     export SECONDARY_STORAGE /storage/sdcard1
-    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
-    export EMULATED_STORAGE_TARGET /storage/emulated
+   # export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
+   # export EMULATED_STORAGE_TARGET /storage/emulated
     export BOOTCLASSPATH ${BOOTCLASSPATH}:/system/framework/qcom.fmradio.jar
 
     # Support legacy paths
-    symlink /storage/emulated/legacy /sdcard
-    symlink /storage/emulated/legacy /mnt/sdcard
-    symlink /storage/emulated/legacy /storage/sdcard0
+    symlink /storage/sdcard0 /mnt/sdcard
+    symlink /storage/sdcard0 /sdcard
+    symlink  /storage/sdcard1 /external_sd
+    symlink  /storage/sdcard1 /mnt/external_sd
 #   symlink /storage/usbdisk /usbdisk
 #   symlink /storage/usbdisk /mnt/usbdisk
 
@@ -567,11 +573,11 @@ service wifi-crda /system/bin/sh /system/etc/init.crda.sh
 on property:sys.boot_completed=1
     start qcom-post-boot
 
-service atfwd /system/bin/ATFWD-daemon
-    class late_start
-    user system
-    group system radio
-    onrestart /system/bin/log -t RIL-ATFWD -p w "ATFWD daemon restarted"
+#service atfwd /system/bin/ATFWD-daemon
+#    class late_start
+#    user system
+#    group system radio
+#    onrestart /system/bin/log -t RIL-ATFWD -p w "ATFWD daemon restarted"
 
 service hdmid /system/bin/hdmid
     class late_start
@@ -631,17 +637,34 @@ service profiler_daemon /system/bin/profiler_daemon
     group root
     disabled
 
-service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
-    class late_start
-    disabled
+
 
 on property:ro.fuse_sdcard=true
     start sdcard
 
+service sdcard /system/bin/sdcard /data/media 1023 1023
+    class late_start
+    disabled
+
+on property:persist.fuse_sdcard=true
+    start sdcard
+
+service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard0 /storage/sdcard0
+    class late_start
+    disabled
+
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
+    class late_start
+    disabled
+
+#service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
+#    class late_start
+#    disabled    
+    
 # Binding fuse mount point to /storage/emulated/legacy
 on property:init.svc.sdcard=running
-    wait /mnt/shell/emulated/0
-    mount none /mnt/shell/emulated/0 /storage/emulated/legacy bind
+#    wait /mnt/shell/emulated/0
+#    mount none /mnt/shell/emulated/0 /storage/emulated/legacy bind
 
 # This will make sure that sdcard service starts as late_start.
 on nonencrypted
