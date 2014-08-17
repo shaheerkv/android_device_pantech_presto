@@ -23,4 +23,3 @@ WIFI_EXT_MODULE_PATH                := "/system/lib/modules/librasdioif.ko"
 WIFI_EXT_MODULE_NAME                := "librasdioif"
 
 BOARD_HAVE_PRESTO_WIFI              := true
-TARGET_CUSTOM_WIFI                  := ../../device/pantech/presto/wifi/presto_wifi.c
