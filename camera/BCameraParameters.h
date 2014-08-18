@@ -1,5 +1,3 @@
-
-
 /*
  * Copyright (C) 2008 The Android Open Source Project
  *
@@ -648,6 +646,19 @@ public:
     static const char KEY_WDR[];
     static const char KEY_WEATHER[];
     static const char KEY_CITYID[];
+
+    static const char KEY_DYNAMIC_RANGE_CONTROL[];
+    static const char KEY_SUPPORTED_DYNAMIC_RANGE_CONTROL[];
+    static const char KEY_PHASE_AF[];
+    static const char KEY_SUPPORTED_PHASE_AF[];
+    static const char KEY_RT_HDR[];
+    static const char KEY_SUPPORTED_RT_HDR[];
+    static const char DRC_ON[];
+    static const char DRC_OFF[];
+    static const char PAF_ON[];
+    static const char PAF_OFF[];
+    static const char RTHDR_ON[];
+    static const char RTHDR_OFF[];
 #endif
 
 #ifdef HTC_CAMERA_HARDWARE
@@ -1152,4 +1163,3 @@ private:
 }; // namespace android
 
 #endif
-

@@ -26,12 +26,13 @@ BOARD_VENDOR := pantech
 # Headers path
 TARGET_SPECIFIC_HEADER_PATH := device/pantech/presto/include
 
+# Camera parameters path
+BOARD_CAMERA_EXTRA_PARAMETERS_PATH := device/pantech/presto/camera
+
 # inherit from pantech msm8660-common
 -include device/pantech/msm8660-common/BoardConfigCommon.mk
 
 #----------------------------------------------------------------------
-
-
 
 # Assert
 TARGET_OTA_ASSERT_DEVICE := PantechP9070,presto
@@ -51,7 +52,6 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_BOOTLOADER_BOARD_NAME := MSM8660_SURF
 
 # Camera
-BOARD_CAMERA_EXTRA_PARAMETERS_PATH := device/pantech/presto/camera
 BOARD_PANTECH_CAMERA := true
 BOARD_CAMERA_USE_MM_HEAP := true
 BOARD_NEEDS_MEMORYHEAPPMEM := true
