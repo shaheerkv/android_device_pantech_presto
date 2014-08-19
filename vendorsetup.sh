@@ -27,4 +27,4 @@
 #  IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-add_lunch_combo full_presto-userdebug
+add_lunch_combo liquid_presto-userdebug

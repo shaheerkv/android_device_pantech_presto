@@ -17,4 +17,4 @@
 #----------------------------------------------------------------------
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/full_presto.mk
+    $(LOCAL_DIR)/presto.mk
