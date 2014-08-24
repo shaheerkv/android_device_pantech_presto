@@ -90,7 +90,7 @@ PRODUCT_PACKAGES += audio.primary.msm8660
 #PRODUCT_PACKAGES += FmRadioReceiver
 
 # Presto Settings
-#PRODUCT_PACKAGES += PrestoParts
+PRODUCT_PACKAGES += AdvancedSettings
 
 # Ramdisk
 PRODUCT_PACKAGES += \
